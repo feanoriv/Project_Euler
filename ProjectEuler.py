@@ -416,3 +416,17 @@ def path_in_grid(n:int) -> int:  # Принимает разрядность с�
         res = lst
     return res[0]
 # print(path_in_grid(20))
+
+"""
+Задача 16
+2^15 = 32768, сумма цифр этого числа равна 3 + 2 + 7 + 6 + 8 = 26.
+Какова сумма цифр числа 2^1000?
+"""
+@timer
+def sum_degree_of_2(n:int) -> int:  # Сумма цифр в числе 2^n
+    str_number = str(2**n)
+    res = 0
+    for num in str_number:
+        res += int(num)
+    return res
+print(sum_degree_of_2(1000))
