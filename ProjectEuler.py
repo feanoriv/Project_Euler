@@ -271,7 +271,7 @@ def table_conversion_in_list_of_list(file:str):
     return lst_row
 @timer
 def max_multiply(n=4):
-    lst_of_lst = table_conversion_in_list_of_list("greed.txt")
+    lst_of_lst = table_conversion_in_list_of_list("files/greed.txt")
     res_lst = []
     for i in range(len(lst_of_lst)):
         for j in range(0, len(lst_of_lst[i]) - 3):
@@ -347,7 +347,7 @@ def parse_numbers(file:str):
     return text
 @timer
 def sum_all_numbers():
-    lst = parse_numbers("50numbers.txt")
+    lst = parse_numbers("files/50numbers.txt")
     return str(sum(lst))[:10]
 # print(sum_all_numbers())
 
