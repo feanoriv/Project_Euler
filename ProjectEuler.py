@@ -619,3 +619,37 @@ def amicable_numbers(n=10000):
     return res
 # print(sum(amicable_numbers()))
 
+"""
+Задача 22
+Используйте names.txt (щелкнуть правой кнопкой мыши и выбрать 'Save Link/Target As...'),
+текстовый файл размером 46 КБ, содержащий более пяти тысяч имен. Начните с сортировки 
+в алфавитном порядке. Затем подсчитайте алфавитные значения каждого имени и умножьте 
+это значение на порядковый номер имени в отсортированном списке для получения количества 
+очков имени.
+Например, если список отсортирован по алфавиту, имя COLIN (алфавитное значение которого 
+3 + 15 + 12 + 9 + 14 = 53) является 938-м в списке. Поэтому, имя COLIN получает 938 × 53 = 49714 
+очков.
+Какова сумма очков имен в файле?
+"""
+
+def read_file_return_lst(file="files/names.txt"):
+    with open(file) as file:
+        text = file.read()
+    text = text.replace('"', '').lower()
+    text = text.split(",")
+    return sorted(text)
+
+
+char2 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+@timer
+def points_of_names():
+    names = read_file_return_lst()
+    lst_points = []
+    for ind, name in enumerate(names):
+        points = 0
+        for char in name:
+            points += char2.index(char) + 1
+        points *= (ind + 1)
+        lst_points.append(points)
+    return sum(lst_points)
+# print(points_of_names())
