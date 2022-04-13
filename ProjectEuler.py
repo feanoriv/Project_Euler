@@ -13,7 +13,9 @@ def timer(func):
         finally:
             end_ = int(round(time() * 1000)) - start
             print(f"Функция {func.__name__} с аргументом/и {args}, - завершилась за: {end_ if end_ > 0 else 0} ms")
+
     return _time_it
+
 
 """
 Задача 1
@@ -21,9 +23,13 @@ def timer(func):
 Сумма этих чисел равна 23.
 Найдите сумму всех чисел меньше 1000, кратных 3 или 5.
 """
+
+
 @timer
 def sum_3_5_multiples_numbers(n):
     return sum([a for a in range(n) if a % 3 == 0 or a % 5 == 0])
+
+
 # print(sum_3_5_multiples_numbers(1000))
 
 """
@@ -33,6 +39,8 @@ def sum_3_5_multiples_numbers(n):
 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 Найдите сумму всех четных элементов ряда Фибоначчи, которые не превышают четыре миллиона.
 """
+
+
 @timer
 def sum_fib_even(n):
     i1 = 1
@@ -44,6 +52,8 @@ def sum_fib_even(n):
             res += i2
         i1, i2 = i2, i3
     return res
+
+
 # print(sum_fib_even(4000000))
 
 """
@@ -51,9 +61,11 @@ def sum_fib_even(n):
 Простые делители числа 13195 - это 5, 7, 13 и 29.
 Каков самый большой делитель числа 600851475143, являющийся простым числом?
 """
+
+
 @timer
 def biggest_simple_divisor(n):
-    square_root = int(n**0.5)
+    square_root = int(n ** 0.5)
     for i in range(square_root, 0, -1):
         if n % i == 0:
             if i > 3:
@@ -64,6 +76,8 @@ def biggest_simple_divisor(n):
                         continue
                 if flag:
                     return i
+
+
 # print(biggest_simple_divisor(600851475143))
 
 """
@@ -72,15 +86,19 @@ def biggest_simple_divisor(n):
 Самое большое число-палиндром, полученное умножением двух двузначных чисел – 9009 = 91 × 99.
 Найдите самый большой палиндром, полученный умножением двух трехзначных чисел.
 """
+
+
 @timer
-def biggest_palindrome(n:int):  # n - разрядность чисел
+def biggest_palindrome(n: int):  # n - разрядность чисел
     list_palindrome = []
     n1, n2 = int(n * "9"), int(n * "9")
     for i in range(n1, 0, -1):
         for k in range(n2, 0, -1):
-            if str(i*k) == str(i*k)[::-1]:
-                list_palindrome.append(i*k)
+            if str(i * k) == str(i * k)[::-1]:
+                list_palindrome.append(i * k)
     return max(list_palindrome)
+
+
 # print(biggest_palindrome(3))
 
 """
@@ -89,10 +107,11 @@ def biggest_palindrome(n:int):  # n - разрядность чисел
 Какое самое маленькое число делится нацело на все числа от 1 до 20?
 """
 
-def sieve_of_Eratosthenes(n:int) -> list:
+
+def sieve_of_Eratosthenes(n: int) -> list:
     lst = list(range(2, n + 1))
     i, k = 0, 0
-    sqrt_n = int(n**0.5) + 1
+    sqrt_n = int(n ** 0.5) + 1
     while sqrt_n >= k:
         k = lst[i]
         lst = [x for x in lst if x % k != 0]
@@ -106,26 +125,30 @@ def is_prime(n):
         return True
     if n % 2 == 0:
         return False
-    for k in range(3, int(n**0.5)+1, 2):
+    for k in range(3, int(n ** 0.5) + 1, 2):
         if n % k == 0:
             return False
     else:
         return True
+
+
 def multiply(lst):
     res = 1
     for elem in lst:
         res *= elem
     return res
 
+
 @timer
 def smallest_multiple_number(n):
-    list_simple_numbers = [x for x in range(1, n+1) if is_prime(x)]
+    list_simple_numbers = [x for x in range(1, n + 1) if is_prime(x)]
     step = multiply(list_simple_numbers)
     res = 0
-    while res <= multiply(list(range(1, n+1))):
+    while res <= multiply(list(range(1, n + 1))):
         res += step
-        if all([res % x == 0 for x in list(range(1, n+1))]):
+        if all([res % x == 0 for x in list(range(1, n + 1))]):
             return res
+
 
 # Удивительная разница во времени расчётах между числом 120 и 130 для этой функции
 # print(smallest_multiple_number(20))
@@ -140,9 +163,13 @@ def smallest_multiple_number(n):
 натуральных чисел составляет 3025 − 385 = 2640.
 Найдите разность между суммой квадратов и квадратом суммы первых ста натуральных чисел.
 """
+
+
 @timer
 def difference_of_squares(n):
-    return sum(list(range(n + 1)))**2 - sum([x**2 for x in range(n + 1)])
+    return sum(list(range(n + 1))) ** 2 - sum([x ** 2 for x in range(n + 1)])
+
+
 # print(difference_of_squares(100))
 
 """
@@ -150,6 +177,8 @@ def difference_of_squares(n):
 Выписав первые шесть простых чисел, получим 2, 3, 5, 7, 11 и 13. Очевидно, что 6-е простое число - 13.
 Какое число является 10001-м простым числом?
 """
+
+
 @timer
 def primary_10001(n):
     number = 2
@@ -160,6 +189,8 @@ def primary_10001(n):
             if number_primary == n:
                 return number
         number += 1
+
+
 # print(primary_10001(10001))
 
 """
@@ -192,17 +223,21 @@ str_number = """
 """
 Найдите наибольшее произведение тринадцати последовательных цифр в данном числе.
 """
+
+
 @timer
 def biggest_mul(n):  # Число символов
     res = []
     number = str_number.replace("\n", "")
     for i in range(len(number) - n - 1):
-        str_sequence = number[i:i+n]
+        str_sequence = number[i:i + n]
         lst_int = []
         for elem in str_sequence:
             lst_int.append(int(elem))
         res.append(multiply(lst_int))
     return max(res)
+
+
 # print(biggest_mul(13))
 
 """
@@ -213,13 +248,17 @@ a^2 + b^2 = c^2
 Существует только одна тройка Пифагора, для которой a + b + c = 1000.
 Найдите произведение abc.
 """
+
+
 @timer
 def pythagorean_triple(s=1000):
     for a in range(3, s):
         for b in range(4, s):
-            c = (a**2 + b**2)**0.5
+            c = (a ** 2 + b ** 2) ** 0.5
             if a + b + c == s:
                 return multiply([a, b, c])
+
+
 # print(pythagorean_triple(1000))
 
 """
@@ -228,9 +267,12 @@ def pythagorean_triple(s=1000):
 Найдите сумму всех простых чисел меньше двух миллионов.
 """
 
+
 @timer
 def sum_prime_numbers(n):  # n - до скольки считать
     return sum(sieve_of_Eratosthenes(n))
+
+
 # print(sum_prime_numbers(2000000))
 
 """
@@ -261,7 +303,9 @@ def sum_prime_numbers(n):  # n - до скольки считать
 Каково наибольшее произведение четырех подряд идущих чисел в таблице 20×20, 
 расположенных в любом направлении (вверх, вниз, вправо, влево или по диагонали)?
 """
-def table_conversion_in_list_of_list(file:str):
+
+
+def table_conversion_in_list_of_list(file: str):
     with open(file) as file:
         tbl = file.read()
     lst_row = tbl.split("\n")
@@ -270,27 +314,31 @@ def table_conversion_in_list_of_list(file:str):
         for ind, elem in enumerate(lst_row[i]):
             lst_row[i][ind] = int(elem)
     return lst_row
+
+
 @timer
 def max_multiply(n=4):
     lst_of_lst = table_conversion_in_list_of_list("files/greed.txt")
     res_lst = []
     for i in range(len(lst_of_lst)):
         for j in range(0, len(lst_of_lst[i]) - 3):
-            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i][j+1] *
-                           lst_of_lst[i][j+2] * lst_of_lst[i][j+3])
+            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i][j + 1] *
+                           lst_of_lst[i][j + 2] * lst_of_lst[i][j + 3])
     for i in range(len(lst_of_lst) - 3):
         for j in range(0, len(lst_of_lst[i])):
-            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i+1][j] *
-                           lst_of_lst[i+2][j] * lst_of_lst[i+3][j])
+            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i + 1][j] *
+                           lst_of_lst[i + 2][j] * lst_of_lst[i + 3][j])
     for i in range(len(lst_of_lst) - 3):
         for j in range(0, len(lst_of_lst[i]) - 3):
-            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i+1][j+1] *
-                           lst_of_lst[i+2][j+2] * lst_of_lst[i+3][j+3])
+            res_lst.append(lst_of_lst[i][j] * lst_of_lst[i + 1][j + 1] *
+                           lst_of_lst[i + 2][j + 2] * lst_of_lst[i + 3][j + 3])
     for i in range(len(lst_of_lst) - 3):
         for j in range(0, len(lst_of_lst[i]) - 3):
-            res_lst.append(lst_of_lst[i][j+3] * lst_of_lst[i+1][j+2] *
-                           lst_of_lst[i+2][j+1] * lst_of_lst[i+3][j])
+            res_lst.append(lst_of_lst[i][j + 3] * lst_of_lst[i + 1][j + 2] *
+                           lst_of_lst[i + 2][j + 1] * lst_of_lst[i + 3][j])
     return max(res_lst)
+
+
 # print(max_multiply(4))
 
 """
@@ -310,18 +358,22 @@ def max_multiply(n=4):
 Как мы видим, 28 - первое треугольное число, у которого более пяти делителей.
 Каково первое треугольное число, у которого более пятисот делителей?
 """
+
+
 def how_divisors_have(n):
     res = 1
     if n == 0:
         return 0
     if n == 1:
         return 1
-    for i in range(2, int(n**0.5) + 1):
+    for i in range(2, int(n ** 0.5) + 1):
         if n % i == 0:
             res += 2
-    if n / n**0.5 % 1 == 0:
+    if n / n ** 0.5 % 1 == 0:
         res -= 1
     return res + 1
+
+
 @timer
 def triangular_numbers(n=500):
     i = 1
@@ -331,6 +383,8 @@ def triangular_numbers(n=500):
         i += 1
         if divis >= n:
             return i, number, divis
+
+
 """ Тут 1 секунда - вычисление sum(range(i)), остальные 6 секунд - подсчёт 
 кол-ва делителей числа функцией how_divisors_have(). Есть в сети алгоритмы."""
 # print(triangular_numbers())
@@ -339,17 +393,23 @@ def triangular_numbers(n=500):
 Задача 13
 Найдите первые десять цифр суммы следующих ста 50-значных чисел. Имя файла "50numbers.txt"
 """
-def parse_numbers(file:str):
+
+
+def parse_numbers(file: str):
     with open(file) as file:
         text = file.read()
     text = text.split('\n')
     for i, elem in enumerate(text):
         text[i] = int(elem)
     return text
+
+
 @timer
 def sum_all_numbers():
     lst = parse_numbers("files/50numbers.txt")
     return str(sum(lst))[:10]
+
+
 # print(sum_all_numbers())
 
 """
@@ -363,6 +423,8 @@ n → 3n + 1 (n - нечетное)
 Какой начальный элемент меньше миллиона генерирует самую длинную последовательность?
 Примечание: Следующие за первым элементы последовательности могут быть больше миллиона.
 """
+
+
 @timer
 def problem_Collatz(n=1000000):
     res = [1, 1]
@@ -385,6 +447,8 @@ def problem_Collatz(n=1000000):
                 if res[1] < k:
                     res = [ind, k]
     return res
+
+
 """ Добавление словаря пройденных путей позволило уменьшить скорость работы 
 алгоритма с 45 до 3 секунд, я рад =)"""
 
@@ -405,9 +469,10 @@ def problem_Collatz(n=1000000):
 Доволен=)
 """
 
+
 @timer
-def path_in_grid(n:int) -> int:  # Принимает разрядность сетки
-    n += 1    # Количество узлов в сетке на 1 больше чем разрядность
+def path_in_grid(n: int) -> int:  # Принимает разрядность сетки
+    n += 1  # Количество узлов в сетке на 1 больше чем разрядность
     lst = [1]
     res = [1]
     for i in range(1, n + 1):
@@ -416,6 +481,8 @@ def path_in_grid(n:int) -> int:  # Принимает разрядность с�
         res.insert(0, 2 * res[0])
         res = lst
     return res[0]
+
+
 # print(path_in_grid(20))
 
 """
@@ -423,13 +490,17 @@ def path_in_grid(n:int) -> int:  # Принимает разрядность с�
 2^15 = 32768, сумма цифр этого числа равна 3 + 2 + 7 + 6 + 8 = 26.
 Какова сумма цифр числа 2^1000?
 """
+
+
 @timer
-def sum_degree_of_2(n:int) -> int:  # Сумма цифр в числе 2^n
-    str_number = str(2**n)
+def sum_degree_of_2(n: int) -> int:  # Сумма цифр в числе 2^n
+    str_number = str(2 ** n)
     res = 0
     for num in str_number:
         res += int(num)
     return res
+
+
 # print(sum_degree_of_2(1000))
 
 
@@ -454,30 +525,35 @@ illions = {
     1: 'thousand', 2: 'million', 3: 'billion', 4: 'trillion', 5: 'quadrillion',
     6: 'quintillion', 7: 'sextillion', 8: 'septillion', 9: 'octillion',
     10: 'nonillion', 11: 'decillion'}
+
+
 @timer
 def how_letter_in_sequence(n):
     res = 0
-    #res_str = []
-    for i in range(1, n+1):
+    # res_str = []
+    for i in range(1, n + 1):
         if i // 10 <= 1:
             res += len(ones[i])
-            #res_str.append(ones[i])
+            # res_str.append(ones[i])
         elif i // 10 >= 2 and i // 10 <= 9:
             res += len(tens[i // 10]) + len(ones[i % 10])
-            #res_str.append(tens[i // 10] + " " + ones[i % 10])
+            # res_str.append(tens[i // 10] + " " + ones[i % 10])
         elif i // 10 > 9 and i // 10 < 100:
             if i % 100 == 0:
                 res += len(ones[i / 100]) + len("hundred")
-                #res_str.append(ones[i / 100] + " " + "hundred")
+                # res_str.append(ones[i / 100] + " " + "hundred")
             elif i % 100 <= 19:
                 res += len(ones[i // 100]) + len("hundred") + len("and") + len(ones[i % 100])
-                #res_str.append(ones[i // 100] + " " + "hundred" + " and" + " " + ones[i % 100])
+                # res_str.append(ones[i // 100] + " " + "hundred" + " and" + " " + ones[i % 100])
             elif i % 100 >= 19:
-                res += len(ones[i // 100]) + len("hundred") + len("and") + len(tens[(i % 100) // 10]) + len(ones[(i % 100) % 10])
-                #res_str.append(ones[i // 100] + " " + "hundred" + " and " + tens[(i % 100) // 10] + " " + ones[(i % 100) % 10])
+                res += len(ones[i // 100]) + len("hundred") + len("and") + len(tens[(i % 100) // 10]) + len(
+                    ones[(i % 100) % 10])
+                # res_str.append(ones[i // 100] + " " + "hundred" + " and " + tens[(i % 100) // 10] + " " + ones[(i % 100) % 10])
         elif i // 1000 >= 1:
             res += len("onethousand")
     return res
+
+
 # Закоменчен список текстового представления элементов
 # print(how_letter_in_sequence(1000))
 
@@ -497,7 +573,9 @@ def how_letter_in_sequence(n):
 треугольником, состоящим из сотни строк, не решается перебором 
 (brute force) и требует более умного подхода! ;o)
 """
-def parse_triangle(file:str)->list:
+
+
+def parse_triangle(file: str) -> list:
     with open(file) as file:
         text = file.read()
     text = text.split("\n")
@@ -507,13 +585,15 @@ def parse_triangle(file:str)->list:
             text[i][k] = int(j)
     return text
 
+
 def max_sum_triangle():
     lst = parse_triangle("files/triangle.txt")[::-1]  # Начало итераций с основания
     for ind, line in enumerate(lst):
         if ind == len(lst) - 1:
             return line[0]
         for i in range(len(lst[ind + 1])):
-            lst[ind + 1][i] = lst[ind + 1][i] + max(lst[ind][i], lst[ind][i+1])
+            lst[ind + 1][i] = lst[ind + 1][i] + max(lst[ind][i], lst[ind][i + 1])
+
 
 # print(max_sum_triangle())
 
@@ -531,6 +611,7 @@ def max_sum_triangle():
 """
 
 mounts_days = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
+
 
 @timer
 def sundays_count():
@@ -566,6 +647,8 @@ def sundays_count():
                 if elem[2] == 1 and elem[3] == 7 and elem[0] != 1900:
                     counter += 1
             return counter
+
+
 # Минут 30 не понимал откуда лишний день взялся, нашёл пару схожих проблем на stuckoverflow, и что в итоге?
 # Я считал понедельники, а не воскресенья...
 # print(sundays_count())
@@ -578,12 +661,15 @@ n! означает n × (n − 1) × ... × 3 × 2 × 1
 и сумма цифр в числе 10! равна 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 Найдите сумму цифр в числе 100!.
 """
+
+
 @timer
 def factorial_sum(n):
     factorial = 1
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         factorial *= i
     return sum([int(x) for x in list(str(factorial))])
+
 
 # print(factorial_sum(100))
 
@@ -596,27 +682,32 @@ def factorial_sum(n):
 поэтому d(220) = 284. Делители 284 - 1, 2, 4, 71, 142, поэтому d(284) = 220.
 Подсчитайте сумму всех дружественных чисел меньше 10000.
 """
-def get_sum_divisors(n):
+
+
+def divisors(n):
     res = [1]
     if n <= 1:
-        return 0
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0 and i**2 != n:
+        return [0]
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0 and i ** 2 != n:
             res.append(i)
             res.append(int(n / i))
-        elif i**2 == n:
+        elif i ** 2 == n:
             res.append(i)
-    return sum(res)
+    return res
+
 
 @timer
 def amicable_numbers(n=10000):
     res = []
-    for i in range(1, n+1):
-        a_num = get_sum_divisors(i)
+    for i in range(1, n + 1):
+        a_num = sum(divisors(i))
         if i != a_num:
-            if i == get_sum_divisors(a_num):
+            if i == sum(divisors(a_num)):
                 res.append(i)
     return res
+
+
 # print(sum(amicable_numbers()))
 
 """
@@ -632,6 +723,7 @@ def amicable_numbers(n=10000):
 Какова сумма очков имен в файле?
 """
 
+
 def read_file_return_lst(file="files/names.txt"):
     with open(file) as file:
         text = file.read()
@@ -640,7 +732,10 @@ def read_file_return_lst(file="files/names.txt"):
     return sorted(text)
 
 
-char2 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+char2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+         'w', 'x', 'y', 'z']
+
+
 @timer
 def points_of_names():
     names = read_file_return_lst()
@@ -652,4 +747,101 @@ def points_of_names():
         points *= (ind + 1)
         lst_points.append(points)
     return sum(lst_points)
+
+
 # print(points_of_names())
+
+
+"""
+Задача 23
+Совершенным числом называется число, у которого сумма его делителей равна самому числу. 
+Например, сумма делителей числа 28 равна 1 + 2 + 4 + 7 + 14 = 28, что означает, что число 
+28 является совершенным числом.
+Число n называется недостаточным, если сумма его делителей меньше n, и называется избыточным, 
+если сумма его делителей больше n.
+Так как число 12 является наименьшим избыточным числом (1 + 2 + 3 + 4 + 6 = 16), наименьшее 
+число, которое может быть записано как сумма двух избыточных чисел, равно 24. Используя 
+математический анализ, можно показать, что все целые числа больше 28123 могут быть записаны 
+как сумма двух избыточных чисел. Эта граница не может быть уменьшена дальнейшим анализом, 
+даже несмотря на то, что наибольшее число, которое не может быть записано как сумма двух 
+избыточных чисел, меньше этой границы.
+Найдите сумму всех положительных чисел, которые не могут быть записаны как сумма двух 
+избыточных чисел.
+"""
+
+def set_abundant_numbers(n=28123) -> list:
+    res = set()
+    for i in range(n):
+        if sum(divisors(i)) > i:
+            res.add(i)
+    return res
+
+@timer
+def sum_abundant_numbers(n=28123):
+    set_amb = set_abundant_numbers()
+    lst_2_amb = list(range(1, n))
+    for i in range(24, n):
+        for num1 in set_amb:
+            if i - num1 < 0:
+                break
+            if i - num1 in set_amb:
+                lst_2_amb.remove(i)
+                break
+    return sum(lst_2_amb)
+""" 
+---Комментарий к решению---
+В течении половины дня я размышлял над тем как оптимизировать код!
+Читал статьи в Вики о совершенных, избыточных и недостаточных числах.
+Код работал 370 секунд, а значит существовал алгоритм, но найти я его так и не смог=(
+Оставил как есть и пошёл проверять ответ, заодно глянуть что за хитрые алгоритмы мне не дались...
+А нет никакого алгоритма! Чтобы код работал в 150 раз быстрее нужно было изменить list() на set()!
+Впервые вижу чтобы уместно применённый тип данных так зарешал.
+В своём коде изменил list на set, т.к. считаю, что задачка покорилась ибо алгоритм я не менял.
+"""
+# print(sum_abundant_numbers())
+
+
+"""
+ЗАдача 24
+Перестановка - это упорядоченная выборка объектов. К примеру, 
+3124 является одной из возможных перестановок из цифр 1, 2, 3 и 4. 
+Если все перестановки приведены в порядке возрастания или алфавитном порядке, 
+то такой порядок будем называть словарным. Словарные перестановки из цифр 0, 1 и 2 представлены ниже:
+012   021   102   120   201   210
+Какова миллионная словарная перестановка из цифр 0, 1, 2, 3, 4, 5, 6, 7, 8 и 9?
+"""
+def factorial(n: int) -> int:
+    res = 1
+    for i in range(1, n+1):
+        res *= i
+    return res
+
+@timer
+def permutation(n: int, number: int = 1000000) -> list:
+    start = list(range(n))
+    res = []
+    for i in range(n):
+        lst = []
+        step = factorial(n - 1 - i)
+        for k in range(1, n + 1-i):
+            lst.append(k * step)
+        for ind, arr in enumerate(lst):
+            if arr >= number:
+                if lst[ind] != 0:
+                    number = number - lst[ind - 1]
+                res.append(start[lst.index(arr)])
+                start.pop(lst.index(arr))
+                break
+
+    return "".join([str(x) for x in res])
+""" 
+---Комментарий---
+Сделал вот такой интересный алгоритм со сложностью On где n - кол-во цифр,
+Проверяя ответ обнаружил, что ребята использовали готовый модуль "from itertools import permutations"
+и брутфорсят ответ. Их алгоритм с использованием permutations - 1187 ms, а мой - 0 ms=))))
+Опять рад)
+"""
+# print(permutation(n=10, number=1000000))
+
+
+
