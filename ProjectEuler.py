@@ -874,5 +874,86 @@ def problem_25(n=1000) -> int:
         if len(str(a2)) >= n:
             return res
 
-print(problem_25())
+# print(problem_25())
 
+"""
+Задача 26
+Единичная дробь имеет 1 в числителе. Десятичные представления единичных дробей 
+со знаменателями от 2 до 10 даны ниже:
+1/2	=	0.5
+1/3	=	0.(3)
+1/4	=	0.25
+1/5	=	0.2
+1/6	=	0.1(6)
+1/7	=	0.(142857)
+1/8	=	0.125
+1/9	=	0.(1)
+1/10	=	0.1
+Где 0.1(6) значит 0.166666..., и имеет повторяющуюся последовательность из одной цифры. 
+Заметим, что 1/7 имеет повторяющуюся последовательность из 6 цифр.
+Найдите значение d < 1000, для которого 1/d в десятичном виде содержит самую 
+длинную повторяющуюся последовательность цифр.
+"""
+def problem_26(n=1000, length=100000):
+    res = []
+    res2 = []
+    for i in range(1, n + 1):
+        base = 1
+        lst = []
+        for k in range(length):
+            if base < i and base != 0:
+                base *= 10
+                if base < i and base != 0:
+                    base *= 10
+                    lst.append(0)
+                    if base > i:
+                        continue
+                    if base < i and base != 0:
+                        base *= 10
+                        lst.append(0)
+                        if base > i:
+                            continue
+                        if base < i:
+                            base *= 10
+                            lst.append(0)
+                            if base > i:
+                                continue
+            if base == 0:
+                lst.append(0)
+            if base >= i:
+                x = base // i
+                base = base % i
+                lst.append(x)
+        lst = lst[:length]
+        res.append(lst)
+        res2.append(len(lst))
+
+    res3 = []
+    for ind, seq in enumerate(res):
+        flag = True
+        seq = seq[::-1]
+        for i in range(int(length/2), 1, -1):
+            if seq[0:i] == seq[i:i*2] and seq[0+1:i+1] != seq[0:i]:
+                seq = seq[0:i]
+                for k in range(1, i):
+                    if seq[0:k] == seq[k:2*k]:
+                        if flag:
+                            seq = seq[0:k]
+                            res3.append([ind+1, seq[0:k]])
+                            flag = False
+                            break
+                if flag:
+                    if seq not in res3:
+                        res3.append(list([ind + 1, seq[::-1]]))
+                        break
+        l = 1
+        num = 0
+        for elem in res3:
+            if len(elem[1]) >= l:
+                l = len(elem[1])
+                num = elem[0]
+
+
+    return num, l
+""" Ответ - верный, подход - нет"""
+print(problem_26())
