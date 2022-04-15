@@ -894,9 +894,9 @@ def problem_25(n=1000) -> int:
 Найдите значение d < 1000, для которого 1/d в десятичном виде содержит самую 
 длинную повторяющуюся последовательность цифр.
 """
-def problem_26(n=1000, length=100000):
-    res = []
-    res2 = []
+@timer
+def problem_26(n=1000, length=3000):
+    res = [0, [1]]
     for i in range(1, n + 1):
         base = 1
         lst = []
@@ -924,36 +924,26 @@ def problem_26(n=1000, length=100000):
                 x = base // i
                 base = base % i
                 lst.append(x)
-        lst = lst[:length]
-        res.append(lst)
-        res2.append(len(lst))
 
-    res3 = []
-    for ind, seq in enumerate(res):
         flag = True
-        seq = seq[::-1]
-        for i in range(int(length/2), 1, -1):
-            if seq[0:i] == seq[i:i*2] and seq[0+1:i+1] != seq[0:i]:
-                seq = seq[0:i]
-                for k in range(1, i):
+        seq = lst[::-1]
+        for j in range(int(length/3), 1, -1):
+            if seq[0:j] == seq[j:j*2] and seq[0+1:j+1] != seq[0:j]:
+                seq = seq[0:j]
+                for k in range(1, j):
                     if seq[0:k] == seq[k:2*k]:
                         if flag:
                             seq = seq[0:k]
-                            res3.append([ind+1, seq[0:k]])
+                            if len(seq) > len(res[1]):
+                                res[0], res[1] = i, seq
                             flag = False
                             break
                 if flag:
-                    if seq not in res3:
-                        res3.append(list([ind + 1, seq[::-1]]))
+                    if len(seq) > len(res[1]):
+                        res[0], res[1] = i, seq
                         break
-        l = 1
-        num = 0
-        for elem in res3:
-            if len(elem[1]) >= l:
-                l = len(elem[1])
-                num = elem[0]
 
 
-    return num, l
-""" Ответ - верный, подход - нет"""
+    return res[0], len(res[1])
+""" Ответ - верный, подход - не очень"""
 print(problem_26())
