@@ -1,5 +1,4 @@
 # Декоратор - таймер
-import pprint
 from functools import wraps
 from time import time
 
@@ -26,11 +25,11 @@ def timer(func):
 
 
 @timer
-def sum_3_5_multiples_numbers(n):
+def problem_1(n):
     return sum([a for a in range(n) if a % 3 == 0 or a % 5 == 0])
 
 
-# print(sum_3_5_multiples_numbers(1000))
+# print(problem_1(1000))
 
 """
 Задача 2
@@ -42,7 +41,7 @@ def sum_3_5_multiples_numbers(n):
 
 
 @timer
-def sum_fib_even(n):
+def problem_2(n):
     i1 = 1
     i2 = 2
     res = 0
@@ -54,7 +53,7 @@ def sum_fib_even(n):
     return res
 
 
-# print(sum_fib_even(4000000))
+# print(problem_2(4000000))
 
 """
 Задача 3
@@ -64,7 +63,7 @@ def sum_fib_even(n):
 
 
 @timer
-def biggest_simple_divisor(n):
+def problem_3(n):
     square_root = int(n ** 0.5)
     for i in range(square_root, 0, -1):
         if n % i == 0:
@@ -78,7 +77,7 @@ def biggest_simple_divisor(n):
                     return i
 
 
-# print(biggest_simple_divisor(600851475143))
+# print(problem_3(600851475143))
 
 """
 Задача 4
@@ -89,7 +88,7 @@ def biggest_simple_divisor(n):
 
 
 @timer
-def biggest_palindrome(n: int):  # n - разрядность чисел
+def problem_4(n: int):  # n - разрядность чисел
     list_palindrome = []
     n1, n2 = int(n * "9"), int(n * "9")
     for i in range(n1, 0, -1):
@@ -99,7 +98,7 @@ def biggest_palindrome(n: int):  # n - разрядность чисел
     return max(list_palindrome)
 
 
-# print(biggest_palindrome(3))
+# print(problem_4(3))
 
 """
 Задача 5
@@ -140,7 +139,7 @@ def multiply(lst):
 
 
 @timer
-def smallest_multiple_number(n):
+def problem_5(n):
     list_simple_numbers = [x for x in range(1, n + 1) if is_prime(x)]
     step = multiply(list_simple_numbers)
     res = 0
@@ -151,7 +150,7 @@ def smallest_multiple_number(n):
 
 
 # Удивительная разница во времени расчётах между числом 120 и 130 для этой функции
-# print(smallest_multiple_number(20))
+# print(problem_5(20))
 
 """
 Задача 6
@@ -166,11 +165,11 @@ def smallest_multiple_number(n):
 
 
 @timer
-def difference_of_squares(n):
+def problem_6(n):
     return sum(list(range(n + 1))) ** 2 - sum([x ** 2 for x in range(n + 1)])
 
 
-# print(difference_of_squares(100))
+# print(problem_6(100))
 
 """
 Задача 7
@@ -180,7 +179,7 @@ def difference_of_squares(n):
 
 
 @timer
-def primary_10001(n):
+def problem_7(n):
     number = 2
     number_primary = 0
     while True:
@@ -191,7 +190,7 @@ def primary_10001(n):
         number += 1
 
 
-# print(primary_10001(10001))
+# print(problem_7(10001))
 
 """
 Задача 8
@@ -226,7 +225,7 @@ str_number = """
 
 
 @timer
-def biggest_mul(n):  # Число символов
+def problem_8(n):  # Число символов
     res = []
     number = str_number.replace("\n", "")
     for i in range(len(number) - n - 1):
@@ -238,7 +237,7 @@ def biggest_mul(n):  # Число символов
     return max(res)
 
 
-# print(biggest_mul(13))
+# print(problem_8(13))
 
 """
 Задача 9
@@ -251,7 +250,7 @@ a^2 + b^2 = c^2
 
 
 @timer
-def pythagorean_triple(s=1000):
+def problem_9(s=1000):
     for a in range(3, s):
         for b in range(4, s):
             c = (a ** 2 + b ** 2) ** 0.5
@@ -259,7 +258,7 @@ def pythagorean_triple(s=1000):
                 return multiply([a, b, c])
 
 
-# print(pythagorean_triple(1000))
+# print(problem_9(1000))
 
 """
 Задача 10
@@ -269,11 +268,11 @@ def pythagorean_triple(s=1000):
 
 
 @timer
-def sum_prime_numbers(n):  # n - до скольки считать
+def problem_10(n):  # n - до скольки считать
     return sum(sieve_of_Eratosthenes(n))
 
 
-# print(sum_prime_numbers(2000000))
+# print(problem_10(2000000))
 
 """
 Задача 11
@@ -317,7 +316,7 @@ def table_conversion_in_list_of_list(file: str):
 
 
 @timer
-def max_multiply(n=4):
+def problem_11(n=4):
     lst_of_lst = table_conversion_in_list_of_list("files/greed.txt")
     res_lst = []
     for i in range(len(lst_of_lst)):
@@ -339,7 +338,7 @@ def max_multiply(n=4):
     return max(res_lst)
 
 
-# print(max_multiply(4))
+# print(problem_11(4))
 
 """
 Задача 12
@@ -375,7 +374,7 @@ def how_divisors_have(n):
 
 
 @timer
-def triangular_numbers(n=500):
+def problem_12(n=500):
     i = 1
     while True:
         number = sum(range(i))
@@ -387,7 +386,7 @@ def triangular_numbers(n=500):
 
 """ Тут 1 секунда - вычисление sum(range(i)), остальные 6 секунд - подсчёт 
 кол-ва делителей числа функцией how_divisors_have(). Есть в сети алгоритмы."""
-# print(triangular_numbers())
+# print(problem_12())
 
 """
 Задача 13
@@ -405,12 +404,12 @@ def parse_numbers(file: str):
 
 
 @timer
-def sum_all_numbers():
+def problem_13():
     lst = parse_numbers("files/50numbers.txt")
     return str(sum(lst))[:10]
 
 
-# print(sum_all_numbers())
+# print(problem_13())
 
 """
 Задача 14
@@ -426,7 +425,7 @@ n → 3n + 1 (n - нечетное)
 
 
 @timer
-def problem_Collatz(n=1000000):
+def problem_14(n=1000000):
     res = [1, 1]
     dict_results = {}
     for ind in range(1, 1000000):
@@ -452,7 +451,7 @@ def problem_Collatz(n=1000000):
 """ Добавление словаря пройденных путей позволило уменьшить скорость работы 
 алгоритма с 45 до 3 секунд, я рад =)"""
 
-# print(problem_Collatz())
+# print(problem_14())
 
 """
 Задача 15
@@ -471,7 +470,7 @@ def problem_Collatz(n=1000000):
 
 
 @timer
-def path_in_grid(n: int) -> int:  # Принимает разрядность сетки
+def problem_15(n: int) -> int:  # Принимает разрядность сетки
     n += 1  # Количество узлов в сетке на 1 больше чем разрядность
     lst = [1]
     res = [1]
@@ -483,7 +482,7 @@ def path_in_grid(n: int) -> int:  # Принимает разрядность с
     return res[0]
 
 
-# print(path_in_grid(20))
+# print(problem_15(20))
 
 """
 Задача 16
@@ -493,7 +492,7 @@ def path_in_grid(n: int) -> int:  # Принимает разрядность с
 
 
 @timer
-def sum_degree_of_2(n: int) -> int:  # Сумма цифр в числе 2^n
+def problem_16(n: int) -> int:  # Сумма цифр в числе 2^n
     str_number = str(2 ** n)
     res = 0
     for num in str_number:
@@ -501,7 +500,7 @@ def sum_degree_of_2(n: int) -> int:  # Сумма цифр в числе 2^n
     return res
 
 
-# print(sum_degree_of_2(1000))
+# print(problem_16(1000))
 
 
 """
@@ -528,7 +527,7 @@ illions = {
 
 
 @timer
-def how_letter_in_sequence(n):
+def problem_17(n):
     res = 0
     # res_str = []
     for i in range(1, n + 1):
@@ -555,7 +554,7 @@ def how_letter_in_sequence(n):
 
 
 # Закоменчен список текстового представления элементов
-# print(how_letter_in_sequence(1000))
+# print(problem_17(1000))
 
 """
 Задача 18
@@ -585,8 +584,8 @@ def parse_triangle(file: str) -> list:
             text[i][k] = int(j)
     return text
 
-
-def max_sum_triangle():
+@timer
+def problem_18():
     lst = parse_triangle("files/triangle.txt")[::-1]  # Начало итераций с основания
     for ind, line in enumerate(lst):
         if ind == len(lst) - 1:
@@ -595,7 +594,7 @@ def max_sum_triangle():
             lst[ind + 1][i] = lst[ind + 1][i] + max(lst[ind][i], lst[ind][i + 1])
 
 
-# print(max_sum_triangle())
+# print(problem_18())
 
 """
 Задача 19
@@ -614,7 +613,7 @@ mounts_days = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10
 
 
 @timer
-def sundays_count():
+def problem_19():
     year = 1900
     mount = 1
     day = 1
@@ -651,7 +650,7 @@ def sundays_count():
 
 # Минут 30 не понимал откуда лишний день взялся, нашёл пару схожих проблем на stuckoverflow, и что в итоге?
 # Я считал понедельники, а не воскресенья...
-# print(sundays_count())
+# print(problem_19())
 
 
 """
@@ -664,14 +663,14 @@ n! означает n × (n − 1) × ... × 3 × 2 × 1
 
 
 @timer
-def factorial_sum(n):
+def problem_20(n):
     factorial = 1
     for i in range(1, n + 1):
         factorial *= i
     return sum([int(x) for x in list(str(factorial))])
 
 
-# print(factorial_sum(100))
+# print(problem_20(100))
 
 """
 Задача 21
@@ -698,7 +697,7 @@ def divisors(n):
 
 
 @timer
-def amicable_numbers(n=10000):
+def problem_21(n=10000):
     res = []
     for i in range(1, n + 1):
         a_num = sum(divisors(i))
@@ -708,7 +707,7 @@ def amicable_numbers(n=10000):
     return res
 
 
-# print(sum(amicable_numbers()))
+# print(sum(problem_21()))
 
 """
 Задача 22
@@ -737,7 +736,7 @@ char2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', '
 
 
 @timer
-def points_of_names():
+def problem_22():
     names = read_file_return_lst()
     lst_points = []
     for ind, name in enumerate(names):
@@ -749,7 +748,7 @@ def points_of_names():
     return sum(lst_points)
 
 
-# print(points_of_names())
+# print(problem_22())
 
 
 """
@@ -777,7 +776,7 @@ def set_abundant_numbers(n=28123) -> list:
     return res
 
 @timer
-def sum_abundant_numbers(n=28123):
+def problem_23(n=28123):
     set_amb = set_abundant_numbers()
     lst_2_amb = list(range(1, n))
     for i in range(24, n):
@@ -798,7 +797,7 @@ def sum_abundant_numbers(n=28123):
 Впервые вижу чтобы уместно применённый тип данных так зарешал.
 В своём коде изменил list на set, т.к. считаю, что задачка покорилась ибо алгоритм я не менял.
 """
-# print(sum_abundant_numbers())
+# print(problem_23())
 
 
 """
@@ -817,7 +816,7 @@ def factorial(n: int) -> int:
     return res
 
 @timer
-def permutation(n: int, number: int = 1000000) -> list:
+def problem_24(n: int, number: int = 1000000) -> list:
     start = list(range(n))
     res = []
     for i in range(n):
@@ -841,7 +840,7 @@ def permutation(n: int, number: int = 1000000) -> list:
 и брутфорсят ответ. Их алгоритм с использованием permutations - 1187 ms, а мой - 0 ms=))))
 Опять рад)
 """
-# print(permutation(n=10, number=1000000))
+# print(problem_24(n=10, number=1000000))
 
 
 """
@@ -946,4 +945,127 @@ def problem_26(n=1000, length=3000):
 
     return res[0], len(res[1])
 """ Ответ - верный, подход - не очень"""
-print(problem_26())
+# print(problem_26())
+
+"""
+Задача 27
+Эйлер опубликовал свою замечательную квадратичную формулу:
+n^2+n+41
+Оказалось, что согласно данной формуле можно получить 40 простых чисел, последовательно подставляя 
+значения 0≤n≤39. Однако, при n=40, 402+40+41=40(40+1)+41 делится на 41 без остатка, и, очевидно, при 
+n=41,412+41+41 делится на 41 без остатка.
+При помощи компьютеров была найдена невероятная формула n2−79n+1601, согласно которой можно получить 
+80 простых чисел для последовательных значений n от 0 до 79. Произведение коэффициентов −79 и 1601 равно −126479.
+Рассмотрим квадратичную формулу вида:
+n^2+an+b, где |a|<1000 и |b|≤1000
+где |n| является модулем (абсолютным значением) n.
+К примеру, |11|=11 и |−4|=4
+Найдите произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить 
+максимальное количество простых чисел для последовательных значений n, начиная со значения n=0.
+"""
+@timer
+def problem_27(a_max=999, b_max=1000):
+    res = [0, []]
+    for b in range( b_max + 1):
+        flag = True
+        if is_prime(abs(b)):
+            for a in range(-a_max, a_max + 1):
+                if flag:
+                    for n in range(100):
+                        x = n**2 + a*n + b
+                        if is_prime(abs(x)):
+                            continue
+                        else:
+                            if res[0] < n:
+                                res = [n, [a, b]]
+
+                            break
+    return res[1][0] * res[1][1]
+
+# print(problem_27())
+
+"""
+Задача 28
+Начиная с числа 1 и двигаясь дальше вправо по часовой стрелке, образуется следующая спираль 5 на 5:
+21 22 23 24 25
+20  7  8  9 10
+19  6  1  2 11
+18  5  4  3 12
+17 16 15 14 13
+Можно убедиться, что сумма чисел в диагоналях равна 101.
+Какова сумма чисел в диагоналях спирали 1001 на 1001, образованной таким же способом?
+"""
+@timer
+def problem_28(n=1001):
+    res = 1
+    for i in range(3, n + 1, 2):
+        res += i ** 2 + (i**2 - (i-1) * 1) + (i**2 - (i-1) * 2) + (i**2 - (i-1) * 3)
+
+    return res
+# print(problem_28())
+
+
+"""
+Задача 29
+Рассмотрим все целочисленные комбинации ab для 2 ≤ a ≤ 5 и 2 ≤ b ≤ 5:
+2^2=4, 2^3=8, 2^4=16, 2^5=32
+3^2=9, 3^3=27, 3^4=81, 3^5=243
+4^2=16, 4^3=64, 4^4=256, 4^5=1024
+5^2=25, 5^3=125, 5^4=625, 5^5=3125
+Если их расположить в порядке возрастания, исключив повторения, мы получим
+ следующую последовательность из 15 различных членов:
+4, 8, 9, 16, 25, 27, 32, 64, 81, 125, 243, 256, 625, 1024, 3125
+Сколько различных членов имеет последовательность ab для 2 ≤ a ≤ 100 и 2 ≤ b ≤ 100?
+"""
+
+@timer
+def problem_29(a=100, b=100):
+    res = set()
+    for i in range(2,a + 1):
+        for j in range(2, b + 1):
+            res.add(i**j)
+    return len(res)
+
+# print(problem_29())
+
+
+"""
+Задача 30
+Удивительно, но существует только три числа, которые могут быть 
+записаны в виде суммы четвертых степеней их цифр:
+1634 = 14 + 64 + 34 + 44
+8208 = 84 + 24 + 04 + 84
+9474 = 94 + 44 + 74 + 44
+1 = 14 не считается, так как это - не сумма.
+Сумма этих чисел равна 1634 + 8208 + 9474 = 19316.
+Найдите сумму всех чисел, которые могут быть записаны в виде суммы пятых степеней их цифр.
+"""
+@timer
+def problem_30(power=5):
+    res = []
+    def max_len(power=power):
+        n = 2
+        while True:
+            if len(str(n * (9**power))) < n:
+                return n-1
+            else:
+                n += 1
+    for i in range(2, int("9"*max_len(power))):
+        lst = [int(n)**power for n in list(str(i))]
+        if sum(lst) == i:
+            res.append(i)
+
+    return sum(res)
+# print(problem_30())
+
+"""
+Задача 31
+В Англии валютой являются фунты стерлингов £ и пенсы p, и в обращении есть восемь монет:
+1p, 2p, 5p, 10p, 20p, 50p, £1 (100p) и £2 (200p).
+£2 возможно составить следующим образом:
+1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p
+Сколькими разными способами можно составить £2, используя любое количество монет?
+"""
+
+def problem_31():
+    pass
