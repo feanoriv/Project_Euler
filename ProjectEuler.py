@@ -584,6 +584,7 @@ def parse_triangle(file: str) -> list:
             text[i][k] = int(j)
     return text
 
+
 @timer
 def problem_18():
     lst = parse_triangle("files/triangle.txt")[::-1]  # Начало итераций с основания
@@ -768,12 +769,14 @@ def problem_22():
 избыточных чисел.
 """
 
+
 def set_abundant_numbers(n=28123) -> list:
     res = set()
     for i in range(n):
         if sum(divisors(i)) > i:
             res.add(i)
     return res
+
 
 @timer
 def problem_23(n=28123):
@@ -787,6 +790,8 @@ def problem_23(n=28123):
                 lst_2_amb.remove(i)
                 break
     return sum(lst_2_amb)
+
+
 """ 
 ---Комментарий к решению---
 В течении половины дня я размышлял над тем как оптимизировать код!
@@ -809,11 +814,14 @@ def problem_23(n=28123):
 012   021   102   120   201   210
 Какова миллионная словарная перестановка из цифр 0, 1, 2, 3, 4, 5, 6, 7, 8 и 9?
 """
+
+
 def factorial(n: int) -> int:
     res = 1
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         res *= i
     return res
+
 
 @timer
 def problem_24(n: int, number: int = 1000000) -> list:
@@ -822,7 +830,7 @@ def problem_24(n: int, number: int = 1000000) -> list:
     for i in range(n):
         lst = []
         step = factorial(n - 1 - i)
-        for k in range(1, n + 1-i):
+        for k in range(1, n + 1 - i):
             lst.append(k * step)
         for ind, arr in enumerate(lst):
             if arr >= number:
@@ -833,6 +841,8 @@ def problem_24(n: int, number: int = 1000000) -> list:
                 break
 
     return "".join([str(x) for x in res])
+
+
 """ 
 ---Комментарий---
 Сделал вот такой интересный алгоритм со сложностью On где n - кол-во цифр,
@@ -864,6 +874,7 @@ F12 = 144
 Каков порядковый номер первого члена последовательности Фибоначчи, содержащего 1000 цифр?
 """
 
+
 def problem_25(n=1000) -> int:
     res = 2
     a1, a2 = 1, 1
@@ -872,6 +883,7 @@ def problem_25(n=1000) -> int:
         res += 1
         if len(str(a2)) >= n:
             return res
+
 
 # print(problem_25())
 
@@ -893,6 +905,8 @@ def problem_25(n=1000) -> int:
 Найдите значение d < 1000, для которого 1/d в десятичном виде содержит самую 
 длинную повторяющуюся последовательность цифр.
 """
+
+
 @timer
 def problem_26(n=1000, length=3000):
     res = [0, [1]]
@@ -926,11 +940,11 @@ def problem_26(n=1000, length=3000):
 
         flag = True
         seq = lst[::-1]
-        for j in range(int(length/3), 1, -1):
-            if seq[0:j] == seq[j:j*2] and seq[0+1:j+1] != seq[0:j]:
+        for j in range(int(length / 3), 1, -1):
+            if seq[0:j] == seq[j:j * 2] and seq[0 + 1:j + 1] != seq[0:j]:
                 seq = seq[0:j]
                 for k in range(1, j):
-                    if seq[0:k] == seq[k:2*k]:
+                    if seq[0:k] == seq[k:2 * k]:
                         if flag:
                             seq = seq[0:k]
                             if len(seq) > len(res[1]):
@@ -942,8 +956,9 @@ def problem_26(n=1000, length=3000):
                         res[0], res[1] = i, seq
                         break
 
-
     return res[0], len(res[1])
+
+
 """ Ответ - верный, подход - не очень"""
 # print(problem_26())
 
@@ -963,16 +978,18 @@ n^2+an+b, где |a|<1000 и |b|≤1000
 Найдите произведение коэффициентов a и b квадратичного выражения, согласно которому можно получить 
 максимальное количество простых чисел для последовательных значений n, начиная со значения n=0.
 """
+
+
 @timer
 def problem_27(a_max=999, b_max=1000):
     res = [0, []]
-    for b in range( b_max + 1):
+    for b in range(b_max + 1):
         flag = True
         if is_prime(abs(b)):
             for a in range(-a_max, a_max + 1):
                 if flag:
                     for n in range(100):
-                        x = n**2 + a*n + b
+                        x = n ** 2 + a * n + b
                         if is_prime(abs(x)):
                             continue
                         else:
@@ -981,6 +998,7 @@ def problem_27(a_max=999, b_max=1000):
 
                             break
     return res[1][0] * res[1][1]
+
 
 # print(problem_27())
 
@@ -995,13 +1013,17 @@ def problem_27(a_max=999, b_max=1000):
 Можно убедиться, что сумма чисел в диагоналях равна 101.
 Какова сумма чисел в диагоналях спирали 1001 на 1001, образованной таким же способом?
 """
+
+
 @timer
 def problem_28(n=1001):
     res = 1
     for i in range(3, n + 1, 2):
-        res += i ** 2 + (i**2 - (i-1) * 1) + (i**2 - (i-1) * 2) + (i**2 - (i-1) * 3)
+        res += i ** 2 + (i ** 2 - (i - 1) * 1) + (i ** 2 - (i - 1) * 2) + (i ** 2 - (i - 1) * 3)
 
     return res
+
+
 # print(problem_28())
 
 
@@ -1018,13 +1040,15 @@ def problem_28(n=1001):
 Сколько различных членов имеет последовательность ab для 2 ≤ a ≤ 100 и 2 ≤ b ≤ 100?
 """
 
+
 @timer
 def problem_29(a=100, b=100):
     res = set()
-    for i in range(2,a + 1):
+    for i in range(2, a + 1):
         for j in range(2, b + 1):
-            res.add(i**j)
+            res.add(i ** j)
     return len(res)
+
 
 # print(problem_29())
 
@@ -1040,22 +1064,28 @@ def problem_29(a=100, b=100):
 Сумма этих чисел равна 1634 + 8208 + 9474 = 19316.
 Найдите сумму всех чисел, которые могут быть записаны в виде суммы пятых степеней их цифр.
 """
+
+
 @timer
 def problem_30(power=5):
     res = []
+
     def max_len(power=power):
         n = 2
         while True:
-            if len(str(n * (9**power))) < n:
-                return n-1
+            if len(str(n * (9 ** power))) < n:
+                return n - 1
             else:
                 n += 1
-    for i in range(2, int("9"*max_len(power))):
-        lst = [int(n)**power for n in list(str(i))]
+
+    for i in range(2, int("9" * max_len(power))):
+        lst = [int(n) ** power for n in list(str(i))]
         if sum(lst) == i:
             res.append(i)
 
     return sum(res)
+
+
 # print(problem_30())
 
 """
@@ -1066,6 +1096,8 @@ def problem_30(power=5):
 1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p
 Сколькими разными способами можно составить £2, используя любое количество монет?
 """
+
+
 @timer
 def problem_31(n=200):
     coins = [2, 5, 10, 20, 50, 100, 200]
@@ -1091,5 +1123,78 @@ def problem_31(n=200):
 
     return len(res)
 
+
 """ Решается около 10 минут, надо оптимизировать"""
 # print(problem_31())
+
+
+"""
+Задача 32
+Каждое n-значное число, которое содержит каждую цифру от 1 до n ровно один раз, будем считать 
+пан-цифровым; к примеру, 5-значное число 15234 является пан-цифровым, т.к. содержит цифры от 1 до 5.
+Произведение 7254 является необычным, поскольку равенство 39 × 186 = 7254, состоящее из множимого, 
+множителя и произведения является пан-цифровым, т.е. содержит цифры от 1 до 9.
+Найдите сумму всех пан-цифровых произведений, для которых равенство "множимое × множитель = произведение" 
+можно записать цифрами от 1 до 9, используя каждую цифру только один раз.
+ПОДСКАЗКА: Некоторые произведения можно получить несколькими способами, поэтому убедитесь, что включили 
+их в сумму лишь единожды.
+"""
+
+
+@timer
+def problem_32():
+    res = set()
+    for i in range(3000):
+        for j in range(99):
+            text_num = str(i * j) + str(j) + str(i)
+            if len(text_num) == 9:
+                if "0" not in text_num:
+                    if len(set(list(text_num))) == 9:
+                        print(i, j, i * j)
+                        res.add(i * j)
+
+    return sum(res)
+
+
+# print(problem_32())
+
+
+"""
+Задача 33
+Дробь 49/98 является любопытной, поскольку неопытный математик, пытаясь сократить ее, 
+будет ошибочно полагать, что 49/98 = 4/8, являющееся истиной, получено вычеркиванием девяток.
+Дроби вида 30/50 = 3/5 будем считать тривиальными примерами.
+Существует ровно 4 нетривиальных примера дробей подобного типа, которые меньше единицы и содержат 
+двухзначные числа как в числителе, так и в знаменателе.
+Пусть произведение этих четырех дробей дано в виде несократимой дроби (числитель и знаменатель дроби 
+не имеют общих сомножителей). Найдите знаменатель этой дроби.
+"""
+
+
+@timer
+def problem_33():
+    numbers = []
+    for i in range(11, 99):
+        for k in range(11, 99):
+            if i < k:
+                res = i / k
+                x, y = str(i), str(k)
+                if "0" not in x + y:
+                    if ((int(x[0]) / int(y[0]) == res) and (int(x[1]) == int(y[1]))) or \
+                            ((int(x[1]) / int(y[0]) == res) and (int(x[0]) == int(y[1]))) or \
+                            ((int(x[0]) / int(y[1]) == res) and (int(x[1]) == int(y[0]))) or \
+                            ((int(x[1]) / int(y[1]) == res) and (int(x[0]) == int(y[0]))):
+                        numbers.append([i, k])
+    num1, num2 = 1, 1
+    for i in numbers:
+        num1 *= i[0]
+        num2 *= i[1]
+    for i in divisors(num2)[::-1]:
+        if (num1 % i == 0) and (num2 % i == 0):
+            num1 = num1 / i
+            num2 = num2 / i
+
+    return num2
+
+
+print(problem_33())
