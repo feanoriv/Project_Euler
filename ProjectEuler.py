@@ -1066,6 +1066,30 @@ def problem_30(power=5):
 1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p
 Сколькими разными способами можно составить £2, используя любое количество монет?
 """
+@timer
+def problem_31(n=200):
+    coins = [2, 5, 10, 20, 50, 100, 200]
+    indexes = [-2, -3, -4, -5, -7, -8, -9]
+    res = [[]]
+    while sum(res[0]) < n:
+        print(sum(res[0]))
+        for lst in res:
+            lst.append(1)
+        new_lists = []
+        for lst in res:
+            for ind in indexes:
+                if sum(lst[ind:]) == coins[indexes.index(ind)]:
+                    new_lst = lst[:]
+                    del new_lst[ind:]
+                    new_lst.insert(ind, coins[indexes.index(ind)])
+                    new_lists.append(sorted(new_lst, reverse=True))
 
-def problem_31():
-    pass
+        if new_lists:
+            for lst in new_lists:
+                if lst not in res:
+                    res.append(lst)
+
+    return len(res)
+
+""" Решается около 10 минут, надо оптимизировать"""
+# print(problem_31())
