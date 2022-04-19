@@ -1295,6 +1295,7 @@ def problem_36(n=1000000):
 ПРИМЕЧАНИЕ: числа 2, 3, 5 и 7 таковыми не считаются.
 """
 
+
 def check_variations_is_prime_2(n: str):
     if len(n) == 1:
         return False
@@ -1302,9 +1303,9 @@ def check_variations_is_prime_2(n: str):
         return False
     if any(num in ["0", "4", "6", "8"] for num in n):
         return False
-    for i in range(len(n)-1):
+    for i in range(len(n) - 1):
         n1 = n[i + 1:]
-        n2 = n[:-i-1]
+        n2 = n[:-i - 1]
         if not is_prime(int(n1)):
             return False
         if not is_prime(int(n2)):
@@ -1320,6 +1321,7 @@ def problem_37(n=1000000):
             if check_variations_is_prime_2(str(i)):
                 res += i
     return res
+
 
 # print(problem_37())
 
@@ -1338,13 +1340,14 @@ def problem_37(n=1000000):
 произведение целого числа и (1,2, ... , n), где n > 1?
 """
 
+
 @timer
 def problem_38():
     res = []
     for i in range(10000):
         text_num = ""
         for k in range(1, 10):
-            text_num += str(k*i)
+            text_num += str(k * i)
             if len(text_num) == 9:
                 if "0" not in text_num:
                     if len(set(list(text_num))) == 9:
@@ -1352,6 +1355,7 @@ def problem_38():
                 else:
                     break
     return max(res)
+
 
 # print(problem_38())
 
@@ -1370,7 +1374,7 @@ def problem_39(n=1000):
     res = []
     for a in range(1, n):
         for b in range(1, n):
-            c = (a**2 + b**2)**0.5
+            c = (a ** 2 + b ** 2) ** 0.5
             if c % 1 == 0:
                 res.append(a + b + c)
     max_count = [0, 0]
@@ -1382,6 +1386,8 @@ def problem_39(n=1000):
                 max_count[1] = i
 
     return max_count
+
+
 # print(problem_39())
 
 """
@@ -1393,6 +1399,7 @@ def problem_39(n=1000):
 d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000
 """
 
+
 @timer
 def problem_40():
     a = ""
@@ -1400,6 +1407,7 @@ def problem_40():
         a += str(i)
     return (int(a[1]) * int(a[10]) * int(a[100]) * int(a[1000])
             * int(a[10000]) * int(a[100000]) * int(a[1000000]))
+
 
 # print(problem_40())
 
@@ -1412,6 +1420,7 @@ def problem_40():
 Какое существует наибольшее n-значное пан-цифровое простое число?
 """
 
+
 @timer
 def problem_41(n=7):
     for i in range(7777777, 1234567, -1):
@@ -1421,6 +1430,52 @@ def problem_41(n=7):
                 if len(set(list(str_num))) == n:
                     if is_prime(i):
                         return i
+
+
 """ Все пан-цифровые числа делятся на 3 кроме n=7,4,1. Поэтому проверяем 7 циферные."""
 
 # print(problem_41())
+
+
+"""
+Задача 42
+n-й член последовательности треугольных чисел задается как tn = ½n(n+1). 
+Таким образом, первые десять треугольных чисел:
+1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+Преобразовывая каждую букву в число, соответствующее ее порядковому номеру в 
+алфавите, и складывая эти значения, мы получим числовое значение слова. 
+Для примера, числовое значение слова SKY равно 19 + 11 + 25 = 55 = t10. 
+Если числовое значение слова является треугольным числом, то мы назовем это слово треугольным словом.
+Используя words.txt (щелкнуть правой кнопкой мыши и выбрать 
+'Save Link/Target As...'), 16 КБ текстовый файл, содержащий около двух тысяч 
+часто используемых английских слов, определите, сколько в нем треугольных слов.
+"""
+
+
+def get_num_char(x: str) -> int:
+    if len(x) == 1:
+        return ord(x) - 64
+    else:
+        raise ValueError("Передано больше одного символа")
+
+
+def get_list_names_from_file(file: str) -> list:
+    with open(file) as file:
+        text = file.read().replace('"', "").split(",")
+    return text
+
+
+@timer
+def problem_42():
+    triangle_numbers = [int((n * (n + 1)) / 2) for n in list(range(1, 100))]
+    words = get_list_names_from_file("files/p042_words.txt")
+    res = 0
+    for word in words:
+        sum_chars = 0
+        for char in word:
+            sum_chars += get_num_char(char)
+        if sum_chars in triangle_numbers:
+            res += 1
+    return res
+
+# print(problem_42())
