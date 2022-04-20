@@ -1496,11 +1496,70 @@ d8d9d10=289 делится на 17 без остатка
 Найдите сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих данным свойством.
 """
 
+# Зачем изобретать велосипед?
+def permutations(iterable, r=None):
+    # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
+    # permutations(range(3)) --> 012 021 102 120 201 210
+    pool = tuple(iterable)
+    n = len(pool)
+    r = n if r is None else r
+    if r > n:
+        return
+    indices = list(range(n))
+    cycles = list(range(n, n-r, -1))
+    yield tuple(pool[i] for i in indices[:r])
+    while n:
+        for i in reversed(range(r)):
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i+1:] + indices[i:i+1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield tuple(pool[i] for i in indices[:r])
+                break
+        else:
+            return
+
+
 @timer
 def problem_43():
+    res = 0
+    n = permutations("9876543210")
+    for i in n:
+        if int(i[3]) % 2 != 0:
+            continue
+        if int(i[2] + i[3] + i[4]) % 3 != 0:
+            continue
+        j = "".join(i)
+        if int(j[1] + j[2] + j[3]) % 2 == 0 and \
+            int(j[2] + j[3] + j[4]) % 3 == 0 and \
+            int(j[3] + j[4] + j[5]) % 5 == 0 and \
+            int(j[4] + j[5] + j[6]) % 7 == 0 and \
+            int(j[5] + j[6] + j[7]) % 11 == 0 and \
+            int(j[6] + j[7] + j[8]) % 13 == 0 and \
+            int(j[7] + j[8] + j[9]) % 17 == 0:
+            res += int(j)
+            print(j)
+    return res
+
+
+# print(problem_43())
+
+
+"""
+Задача 44
+Пятиугольные числа вычисляются по формуле: Pn=n(3n−1)/2. 
+Первые десять пятиугольных чисел:
+1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
+Можно убедиться в том, что P4 + P7 = 22 + 70 = 92 = P8. 
+Однако, их разность, 70 − 22 = 48, не является пятиугольным числом.
+Найдите пару пятиугольных чисел Pj и Pk, для которых сумма и разность 
+являются пятиугольными числами и значение D = |Pk − Pj| минимально, и дайте значение D в качестве ответа.
+"""
+
+@timer
+def problem_44():
     pass
-
-
-print(problem_43())
-
 
