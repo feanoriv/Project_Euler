@@ -1,7 +1,17 @@
 # Декоратор - таймер
 from functools import wraps
 from time import time
+import cProfile
 
+def profile(func):
+    """Decorator for run function profile"""
+    def wrapper(*args, **kwargs):
+        profile_filename = func.__name__ + '.prof'
+        profiler = cProfile.Profile()
+        result = profiler.runcall(func, *args, **kwargs)
+        profiler.dump_stats(profile_filename)
+        return result
+    return wrapper
 
 def timer(func):
     @wraps(func)
@@ -1559,7 +1569,132 @@ def problem_43():
 являются пятиугольными числами и значение D = |Pk − Pj| минимально, и дайте значение D в качестве ответа.
 """
 
+
 @timer
 def problem_44():
-    pass
+    res = 999999999
+    lst = set([int(n * (3*n - 1) / 2) for n in range(1, 5000)])
+    per_lst = permutations(lst, r=2)
+    for i in per_lst:
+        if (i[0] + i[1]) in lst and abs(i[0] - i[1]) in lst:
+            d = abs(i[0] - i[1])
+            if d < res:
+                res = d
+    return res
+
+# print(problem_44())
+
+
+"""
+Задача 45
+Треугольные, пятиугольные и шестиугольные числа вычисляются по нижеследующим формулам:
+Треугольные	 	    Tn=n(n+1)/2	 	1, 3, 6, 10, 15, ...
+Пятиугольные	 	Pn=n(3n−1)/2	1, 5, 12, 22, 35, ...
+Шестиугольные	 	Hn=n(2n−1)	 	1, 6, 15, 28, 45, ...
+Можно убедиться в том, что T285 = P165 = H143 = 40755.
+Найдите следующее треугольное число, являющееся также пятиугольным и шестиугольным.
+"""
+
+@timer
+def problem_45():
+    triangle_nums = set([n*(n+1)/2 for n in range(2, 100000)])
+    fivangle_nums = set([n*(3*n-1)/2 for n in range(2, 100000)])
+    sixangle_nums = set([n*(2*n-1) for n in range(2, 100000)])
+    for i in triangle_nums:
+        if i in fivangle_nums and i in sixangle_nums:
+            res = i
+    return res
+
+# print(problem_45())
+
+
+"""
+Задача 46
+Кристиан Гольдбах показал, что любое нечетное составное число можно 
+записать в виде суммы простого числа и удвоенного квадрата.
+9 = 7 + 2×1^2
+15 = 7 + 2×2^2
+21 = 3 + 2×3^2
+25 = 7 + 2×3^2
+27 = 19 + 2×2^2
+33 = 31 + 2×1^2
+Оказалось, что данная гипотеза неверна.
+Каково наименьшее нечетное составное число, которое нельзя записать в виде суммы 
+простого числа и удвоенного квадрата?
+"""
+
+@timer
+def problem_46(n=10000):
+    res = set()
+    nums = set([n for n in range(2, n) if not (is_prime(n)) and (n % 2 != 0)])
+    prime_numbers = set([n for n in range(2, n) if is_prime(n)])
+    double_squares = [2*n**2 for n in range(1, int(n**0.5))]
+    for i in range(4, n):
+        if i in prime_numbers or i % 2 == 0:
+            continue
+        for d_s in double_squares:
+            if d_s >= i:
+                break
+            if i - d_s in prime_numbers:
+                res.add(i)
+                break
+    result = []
+    for i in nums:
+        if i not in res:
+            result.append(i)
+    return min(result)
+
+
+# print(problem_46())
+
+
+"""
+Задача 47
+Первые два последовательные числа, каждое из которых имеет два отличных друг 
+от друга простых множителя:
+14 = 2 × 7
+15 = 3 × 5
+Первые три последовательные числа, каждое из которых имеет три отличных друг 
+от друга простых множителя:
+644 = 2² × 7 × 23
+645 = 3 × 5 × 43
+646 = 2 × 17 × 19.
+Найдите первые четыре последовательных числа, каждое из которых имеет четыре 
+отличных друг от друга простых множителя. Каким будет первое число?
+"""
+@timer
+def problem_47(n=4):
+    stack = 0
+    for i in range(1, 140000):
+        divs = divisors(i)
+        divs = [n for n in divs if is_prime(n) and n != 1]
+        if len(divs) >= n:
+            stack += 1
+        else:
+            stack = 0
+        if stack == n:
+            print(i-3)
+
+
+# print(problem_47())
+
+
+"""
+Задача 48
+Сумма 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+Найдите последние десять цифр суммы 1^1 + 2^2 + 3^3 + ... + 1000^1000.
+"""
+
+@timer
+def problem_48(n=1000):
+    res = 0
+    for i in range(1, n+1):
+        res += i**i
+    return str(res)[-10:]
+
+# print(problem_48())
+
+
+
+
 
