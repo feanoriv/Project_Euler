@@ -2168,3 +2168,25 @@ def problem_54():
 ПРИМЕЧАНИЕ: Формулировка задачи была немного изменена 24 апреля 2007 года, 
 чтобы подчеркнуть теоретическую природу чисел Личрэла.
 """
+
+@timer
+def problem_55(t=10000):
+    res = []
+    result = []
+    for i in range(1, t + 1):
+        stack = 1
+        n = i
+        for k in range(50):
+            n = int(str(n)[::-1]) + n
+            if is_palindrome(str(n)):
+                res.append(i)
+                break
+            else:
+                stack += 1
+    for i in range(1, t + 1):
+        if i not in res:
+            result.append(i)
+    return len(result)
+
+
+print(problem_55())
