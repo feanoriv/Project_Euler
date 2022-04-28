@@ -3,15 +3,19 @@ from functools import wraps
 from time import time
 import cProfile
 
+
 def profile(func):
     """Decorator for run function profile"""
+
     def wrapper(*args, **kwargs):
         profile_filename = func.__name__ + '.prof'
         profiler = cProfile.Profile()
         result = profiler.runcall(func, *args, **kwargs)
         profiler.dump_stats(profile_filename)
         return result
+
     return wrapper
+
 
 def timer(func):
     @wraps(func)
@@ -1488,6 +1492,7 @@ def problem_42():
             res += 1
     return res
 
+
 # print(problem_42())
 
 
@@ -1506,6 +1511,7 @@ d8d9d10=289 делится на 17 без остатка
 Найдите сумму всех пан-цифровых чисел из цифр от 0 до 9, обладающих данным свойством.
 """
 
+
 # Зачем изобретать велосипед?
 def permutations(iterable, r=None):
     # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
@@ -1516,13 +1522,13 @@ def permutations(iterable, r=None):
     if r > n:
         return
     indices = list(range(n))
-    cycles = list(range(n, n-r, -1))
+    cycles = list(range(n, n - r, -1))
     yield tuple(pool[i] for i in indices[:r])
     while n:
         for i in reversed(range(r)):
             cycles[i] -= 1
             if cycles[i] == 0:
-                indices[i:] = indices[i+1:] + indices[i:i+1]
+                indices[i:] = indices[i + 1:] + indices[i:i + 1]
                 cycles[i] = n - i
             else:
                 j = cycles[i]
@@ -1544,12 +1550,12 @@ def problem_43():
             continue
         j = "".join(i)
         if int(j[1] + j[2] + j[3]) % 2 == 0 and \
-            int(j[2] + j[3] + j[4]) % 3 == 0 and \
-            int(j[3] + j[4] + j[5]) % 5 == 0 and \
-            int(j[4] + j[5] + j[6]) % 7 == 0 and \
-            int(j[5] + j[6] + j[7]) % 11 == 0 and \
-            int(j[6] + j[7] + j[8]) % 13 == 0 and \
-            int(j[7] + j[8] + j[9]) % 17 == 0:
+                int(j[2] + j[3] + j[4]) % 3 == 0 and \
+                int(j[3] + j[4] + j[5]) % 5 == 0 and \
+                int(j[4] + j[5] + j[6]) % 7 == 0 and \
+                int(j[5] + j[6] + j[7]) % 11 == 0 and \
+                int(j[6] + j[7] + j[8]) % 13 == 0 and \
+                int(j[7] + j[8] + j[9]) % 17 == 0:
             res += int(j)
             print(j)
     return res
@@ -1573,7 +1579,7 @@ def problem_43():
 @timer
 def problem_44():
     res = 999999999
-    lst = set([int(n * (3*n - 1) / 2) for n in range(1, 5000)])
+    lst = set([int(n * (3 * n - 1) / 2) for n in range(1, 5000)])
     per_lst = permutations(lst, r=2)
     for i in per_lst:
         if (i[0] + i[1]) in lst and abs(i[0] - i[1]) in lst:
@@ -1581,6 +1587,7 @@ def problem_44():
             if d < res:
                 res = d
     return res
+
 
 # print(problem_44())
 
@@ -1595,15 +1602,17 @@ def problem_44():
 Найдите следующее треугольное число, являющееся также пятиугольным и шестиугольным.
 """
 
+
 @timer
 def problem_45():
-    triangle_nums = set([n*(n+1)/2 for n in range(2, 100000)])
-    fivangle_nums = set([n*(3*n-1)/2 for n in range(2, 100000)])
-    sixangle_nums = set([n*(2*n-1) for n in range(2, 100000)])
+    triangle_nums = set([n * (n + 1) / 2 for n in range(2, 100000)])
+    fivangle_nums = set([n * (3 * n - 1) / 2 for n in range(2, 100000)])
+    sixangle_nums = set([n * (2 * n - 1) for n in range(2, 100000)])
     for i in triangle_nums:
         if i in fivangle_nums and i in sixangle_nums:
             res = i
     return res
+
 
 # print(problem_45())
 
@@ -1623,12 +1632,13 @@ def problem_45():
 простого числа и удвоенного квадрата?
 """
 
+
 @timer
 def problem_46(n=10000):
     res = set()
     nums = set([n for n in range(2, n) if not (is_prime(n)) and (n % 2 != 0)])
     prime_numbers = set([n for n in range(2, n) if is_prime(n)])
-    double_squares = [2*n**2 for n in range(1, int(n**0.5))]
+    double_squares = [2 * n ** 2 for n in range(1, int(n ** 0.5))]
     for i in range(4, n):
         if i in prime_numbers or i % 2 == 0:
             continue
@@ -1662,6 +1672,8 @@ def problem_46(n=10000):
 Найдите первые четыре последовательных числа, каждое из которых имеет четыре 
 отличных друг от друга простых множителя. Каким будет первое число?
 """
+
+
 @timer
 def problem_47(n=4):
     stack = 0
@@ -1673,7 +1685,7 @@ def problem_47(n=4):
         else:
             stack = 0
         if stack == n:
-            print(i-3)
+            print(i - 3)
 
 
 # print(problem_47())
@@ -1685,12 +1697,14 @@ def problem_47(n=4):
 Найдите последние десять цифр суммы 1^1 + 2^2 + 3^3 + ... + 1000^1000.
 """
 
+
 @timer
 def problem_48(n=1000):
     res = 0
-    for i in range(1, n+1):
-        res += i**i
+    for i in range(1, n + 1):
+        res += i ** i
     return str(res)[-10:]
+
 
 # print(problem_48())
 
@@ -1706,13 +1720,15 @@ def problem_48(n=1000):
 Какое 12-значное число образуется, если объединить три члена этой прогрессии?
 """
 
+
 @timer
 def problem_49():
     for i in range(1000, 9999):
         if is_prime(i) and i != 1487:
-            if is_prime(i+3330) and is_prime(i+2*3330):
-                if set(list(str(i))) == set(list(str(i+3330))) and set(list(str(i))) == set(list(str(i + 2*3330))):
-                    return str(i) + str(i+3330) + str(i+2*3330)
+            if is_prime(i + 3330) and is_prime(i + 2 * 3330):
+                if set(list(str(i))) == set(list(str(i + 3330))) and set(list(str(i))) == set(list(str(i + 2 * 3330))):
+                    return str(i) + str(i + 3330) + str(i + 2 * 3330)
+
 
 # print(problem_49())
 
@@ -1729,22 +1745,24 @@ def problem_49():
 наибольшего количества последовательных простых чисел?
 """
 
+
 @timer
 def problem_50(n=1000000):
     stack = 0
     res = [0, 0]
-    lst = [n for n in range(2, int(n/250)) if is_prime(n)]
+    lst = [n for n in range(2, int(n / 250)) if is_prime(n)]
     for i in range(len(lst)):
         for k in range(20, 999):
             if i + k >= len(lst):
                 break
-            if is_prime(sum(lst[i:i+k])) and sum(lst[i:i+k]) <= n:
+            if is_prime(sum(lst[i:i + k])) and sum(lst[i:i + k]) <= n:
                 stack = k
             else:
                 if res[0] < stack:
                     res[0] = stack
-                    res[1] = sum(lst[i:i+k-1])
+                    res[1] = sum(lst[i:i + k - 1])
     return res
+
 
 # print(problem_50())
 
@@ -1778,7 +1796,6 @@ def problem_50(n=1000000):
 """
 
 
-
 @timer
 def problem_51(n=8):
     def is_meet_number(num):  # Есть ли в числе 3+ повторяющиеся цифры
@@ -1801,12 +1818,353 @@ def problem_51(n=8):
                     res_list.append(int(num.replace(char, n)))
                 return set(res_list)
 
-
     primes = {i for i in range(2, 1000000) if is_prime(i) and is_meet_number(i)}
     for prime in primes:
         if len(primes.intersection(get_list_numbers(prime))) >= 8:
             return min(primes.intersection(get_list_numbers(prime)))
 
-print(problem_51())
+
+# print(problem_51())
 
 
+"""
+Задача 52
+Найдите такое наименьшее натуральное число x, чтобы 
+2x, 3x, 4x, 5x и 6x состояли из одних и тех же цифр.
+"""
+
+
+@timer
+def problem_52():
+    n = 0
+    while True:
+        n += 1
+        if set(str(n * 2)) == set(str(n * 3)) == set(str(n * 4)) == set(str(n * 5)) == set(str(n * 6)):
+            print(n * 2, n * 3, n * 4, n * 5, n * 6)
+            return n
+
+
+# print(problem_52())
+
+
+"""
+Задача 53
+Существует ровно десять способов выбора 3 элементов из множества пяти {1, 2, 3, 4, 5}:
+123, 124, 125, 134, 135, 145, 234, 235, 245, и 345
+В комбинаторике для этого используется обозначение 5C3 = 10.
+В общем случае,
+nCr = n!/(r!(n−r)!), где r ≤ n, n! = n×(n−1)×...×3×2×1 и 0! = 1.
+Это значение превышает один миллион, начиная с n = 23: 23C10 = 1144066.
+Cколько значений (не обязательно различных)  nCr для 1 ≤ n ≤ 100 больше одного миллиона?
+"""
+
+
+@timer
+def problem_53(lim=100):
+    res = 0
+    for n in range(1, lim + 1):
+        for r in range(1, lim + 1):
+            if r <= n:
+                c = factorial(n) / (factorial(r) * factorial(n - r))
+                if c > 1000000:
+                    res += 1
+    return res
+
+
+# print(problem_53())
+
+
+"""
+Задача 54
+В карточной игре покер ставка состоит из пяти карт и оценивается 
+от самой младшей до самой старшей в следующем порядке:
+Старшая карта: Карта наибольшего достоинства.
+Одна пара: Две карты одного достоинства.
+Две пары: Две различные пары карт
+Тройка: Три карты одного достоинства.
+Стрейт: Все пять карт по порядку, любые масти.
+Флаш: Все пять карт одной масти.
+Фул-хаус: Три карты одного достоинства и одна пара карт.
+Каре: Четыре карты одного достоинства.
+Стрейт-флаш: Любые пять карт одной масти по порядку.
+Роял-флаш: Десятка, валет, дама, король и туз одной масти.
+Достоинство карт оценивается по порядку:
+2, 3, 4, 5, 6, 7, 8, 9, 10, валет, дама, король, туз.
+Если у двух игроков получились ставки одного порядка, то выигрывает 
+тот, у кого карты старше: к примеру, две восьмерки выигрывают две пятерки 
+(см. пример 1 ниже). Если же достоинства карт у игроков одинаковы, к примеру, 
+у обоих игроков пара дам, то сравнивают карту наивысшего достоинства (см. пример 4 ниже); 
+если же и эти карты одинаковы, сравнивают следующие две и т.д.
+Допустим, два игрока сыграли 5 ставок следующим образом:
+Ставка	 	1-й игрок	 	2-й игрок	 	Победитель
+1	 	5♥ 5♣ 6♠ 7♠ K♦
+Пара пятерок
+ 	2♣ 3♠ 8♠ 8♦ T♦
+Пара восьмерок
+ 	2-й игрок
+2	 	5♦ 8♣ 9♠ J♠ A♣
+Старшая карта туз
+ 	2♣ 5♣ 7♦ 8♠ Q♥
+Старшая карта дама
+ 	1-й игрок
+3	 	2♦ 9♣ A♠ A♥ A♣
+Три туза
+ 	3♦ 6♦ 7♦ T♦ Q♦
+Флаш, бубны
+ 	2-й игрок
+4	 	4♦ 6♣ 9♥ Q♥ Q♣
+Пара дам
+Старшая карта девятка
+ 	3♦ 6♦ 7♥ Q♦ Q♠
+Пара дам
+Старшая карта семерка
+ 	1-й игрок
+5	 	2♥ 2♦ 4♣ 4♦ 4♠
+Фул-хаус
+Три четверки
+ 	3♣ 3♦ 3♠ 9♠ 9♦
+Фул-хаус
+Три тройки
+ 	1-й игрок
+Файл poker.txt содержит одну тысячу различных ставок для игры двух игроков. 
+В каждой строке файла приведены десять карт (отделенные одним пробелом): первые пять - 
+карты 1-го игрока, оставшиеся пять - карты 2-го игрока. Можете считать, что все ставки 
+верны (нет неверных символов или повторов карт), ставки каждого игрока не следуют в 
+определенном порядке, и что при каждой ставке есть безусловный победитель.
+Сколько ставок выиграл 1-й игрок?
+Примечание: карты в текстовом файле обозначены в соответствии с английскими наименованиями 
+достоинств и мастей: T - десятка, J - валет, Q - дама, K - король, A - туз; S - пики, 
+C - трефы, H - червы, D - бубны.
+"""
+
+
+@timer
+def problem_54():
+    """Функции, которые начинаются с 'is_' возвращают False если комбинация отсутствует,
+    а если такая комбинация есть то возвращает число, х_уу_уу_уу_уу_уу,
+    где х - комбинация (от 9 - флэш роял до 0 - старшая карта, а
+    уу - карты в порядке значимости и убывания.
+    Любая комбинация описанная таким способом даёт число, которое можно сравнивать с другим
+    и выявлять более сильную комбинацию путём сравнения этих чисел."""
+    def get_comps(file="files/p054_poker.txt"):
+        with open(file) as file:
+            text = file.read()
+        return text.split("\n")[:-1]
+
+    def get_comps_players(s: str):
+        s = s.replace("2", "02")
+        s = s.replace("3", "03")
+        s = s.replace("4", "04")
+        s = s.replace("5", "05")
+        s = s.replace("6", "06")
+        s = s.replace("7", "07")
+        s = s.replace("8", "08")
+        s = s.replace("9", "09")
+        s = s.replace("T", "10")
+        s = s.replace("J", "11")
+        s = s.replace("Q", "12")
+        s = s.replace("K", "13")
+        s = s.replace("A", "14")
+        s = s.split(" ")
+        for i, sim in enumerate(s):
+            s[i] = [s[i][:-1], s[i][-1]]
+        s1 = s[:5]
+        s2 = s[5:]
+        return s1, s2
+
+    def is_royal_flush(lst: list):
+        suit = set()
+        value = set()
+        for i in lst:
+            value.add(i[0])
+            suit.add(i[1])
+        if len(suit) == 1 and value == {"10", "11", "12", "13", "14"}:
+            return 90000000000
+        else:
+            return False
+
+    def is_straight_flush(lst: list):
+        suit = set()
+        value = set()
+        for i in lst:
+            value.add(i[0])
+            suit.add(i[1])
+        if len(suit) == 1 and len(value) == 5:
+            lst = sorted(list(value), reverse=True)
+            for ind, el in enumerate(lst[:-1]):
+                if int(el) - int(lst[ind + 1]) == 1:
+                    continue
+                else:
+                    return False
+            return int("8" + "".join(lst))
+        else:
+            return False
+
+    def is_four_of_kind(lst: list):
+        suit = []
+        value = []
+        for i in lst:
+            value.append(i[0])
+            suit.append(i[1])
+        value = sorted(value)
+        if len(set(value[1:])) == 1:
+            return int("7" + "".join(value[1:]) + value[0])
+        if len(set(value[:-1])) == 1:
+            return int("7" + "".join(value[:-1]) + value[-1])
+        else:
+            return False
+
+    def is_full_house(lst: list):
+        suit = []
+        value = []
+        for i in lst:
+            value.append(i[0])
+            suit.append(i[1])
+        value = sorted(value)
+        if len(set(value[2:])) == 1 and len(set(value[:2])) == 1:
+            return int("6" + "".join(value[2:]) + "".join(value[:2]))
+        if len(set(value[3:])) == 1 and len(set(value[:3])) == 1:
+            return int("6" + "".join(value[:3]) + "".join(value[3:]))
+        else:
+            return False
+
+    def is_flush(lst: list):
+        suit = set()
+        value = []
+        for i in lst:
+            value.append(i[0])
+            suit.add(i[1])
+        value = sorted(value, reverse=True)
+        if len(suit) == 1:
+            return int("5" + "".join(value))
+        else:
+            return False
+
+    def is_straight(lst: list):
+        value = []
+        for i in lst:
+            value.append(i[0])
+        value = sorted(value, reverse=True)
+        if len(set(value)) == 5 and int(value[0]) - int(value[4]) == 4:
+            return int("4" + "".join(value))
+        else:
+            return False
+
+    def is_three_of_kind(lst: list):
+        value = []
+        for i in lst:
+            value.append(i[0])
+        value = sorted(value, reverse=True)
+        if len(set(value)) == 3:
+            if len(set(value[:3])) == 1:
+                return int("3" + "".join(value[:3]) + value[3] + value[4])
+            if len(set(value[1:4])) == 1:
+                return int("3" + "".join(value[1:4]) + value[0] + value[4])
+            if len(set(value[2:])) == 1:
+                return int("3" + "".join(value[2:]) + value[0] + value[1])
+        else:
+            return False
+
+    def is_two_pairs(lst: list):
+        value = []
+        for i in lst:
+            value.append(i[0])
+        value = sorted(value, reverse=True)
+        if len(set(value)) == 3:
+            if len(set(value[:2])) == 1 and len(set(value[3:])) == 1:
+                return int("2" + "".join(value[:2]) + value[3] + value[4] + value[2])
+            if len(set(value[:2])) == 1 and len(set(value[2:4])) == 1:
+                return int("2" + "".join(value[:2]) + value[2] + value[3] + value[4])
+            if len(set(value[1:3])) == 1 and len(set(value[3:])) == 1:
+                return int("2" + "".join(value[1:3]) + value[3] + value[4] + value[0])
+        else:
+            return False
+
+    def is_one_pairs(lst: list):
+        value = []
+        for i in lst:
+            value.append(i[0])
+        value = sorted(value, reverse=True)
+        if len(set(value)) == 4:
+            if len(set(value[:2])) == 1:
+                return int("1" + "".join(value[:2]) + value[2] + value[3] + value[4])
+            if len(set(value[1:3])) == 1:
+                return int("1" + "".join(value[1:3]) + value[0] + value[3] + value[4])
+            if len(set(value[2:4])) == 1:
+                return int("1" + "".join(value[2:4]) + value[0] + value[1] + value[4])
+            if len(set(value[3:])) == 1:
+                return int("1" + "".join(value[3:]) + value[0] + value[1] + value[2])
+        else:
+            return False
+
+    def is_high_card(lst: list):
+        suit = set()
+        value = []
+        for i in lst:
+            value.append(i[0])
+            suit.add(i[1])
+        value = sorted(value, reverse=True)
+        if len(set(value)) == 5 and len(suit) > 1:
+            return int("0" + "".join(value))
+        else:
+            return False
+
+    res = 0
+    lst_comps = get_comps()
+    for comp in lst_comps:
+        s1, s2 = get_comps_players(comp)
+        if is_royal_flush(s1): s1 = is_royal_flush(s1)
+        elif is_straight_flush(s1): s1 = is_straight_flush(s1)
+        elif is_four_of_kind(s1): s1 = is_four_of_kind(s1)
+        elif is_full_house(s1): s1 = is_full_house(s1)
+        elif is_flush(s1): s1 = is_flush(s1)
+        elif is_straight(s1): s1 = is_straight(s1)
+        elif is_three_of_kind(s1): s1 = is_three_of_kind(s1)
+        elif is_two_pairs(s1): s1 = is_two_pairs(s1)
+        elif is_one_pairs(s1): s1 = is_one_pairs(s1)
+        elif is_high_card(s1): s1 = is_high_card(s1)
+
+        if is_royal_flush(s2): s2 = is_royal_flush(s2)
+        elif is_straight_flush(s2): s2 = is_straight_flush(s2)
+        elif is_four_of_kind(s2): s2 = is_four_of_kind(s2)
+        elif is_full_house(s2): s2 = is_full_house(s2)
+        elif is_flush(s2): s2 = is_flush(s2)
+        elif is_straight(s2): s2 = is_straight(s2)
+        elif is_three_of_kind(s2): s2 = is_three_of_kind(s2)
+        elif is_two_pairs(s2): s2 = is_two_pairs(s2)
+        elif is_one_pairs(s2): s2 = is_one_pairs(s2)
+        elif is_high_card(s2): s2 = is_high_card(s2)
+
+        if s1 > s2:
+            res += 1
+    return res
+
+
+# print(problem_54())
+
+
+"""
+Задача 55
+Если взять число 47, перевернуть его и прибавить к исходному, т.е. найти 
+47 + 74 = 121, получится палиндром.
+Не из всех чисел таким образом сразу получается палиндром. К примеру,
+349 + 943 = 1292
+1292 + 2921 = 4213
+4213 + 3124 = 7337
+Т.е., понадобилось 3 итерации для того, чтобы превратить число 349 в палиндром.
+Хотя никто еще этого не доказал, считается, что из некоторых чисел, таких как 196, 
+невозможно получить палиндром. Такое число, которое не образует палиндром путем 
+переворачивания и сложения с самим собой, называется числом Личрэла. Ввиду теоретической 
+природы таких чисел, а также цели этой задачи, мы будем считать, что число является 
+числом Личрэла до тех пор, пока не будет доказано обратное. Помимо этого дано, что 
+любое число меньше десяти тысяч либо (1) станет палиндромом меньше, чем за 50 итераций, 
+либо (2) никто, с какой бы-то ни было вычислительной мощностью, не смог получить из 
+него палиндром. Между прочим, 10677 является первым числом, для которого необходимо 
+более 50 итераций, чтобы получить палиндром: 4668731596684224866951378664 
+(53 итерации, 28-значное число).
+На удивление, есть такие палиндромы, которые одновременно являются и числами 
+Личрэла; первое такое число - 4994.
+Сколько существует чисел Личрэла меньше десяти тысяч?
+ПРИМЕЧАНИЕ: Формулировка задачи была немного изменена 24 апреля 2007 года, 
+чтобы подчеркнуть теоретическую природу чисел Личрэла.
+"""
