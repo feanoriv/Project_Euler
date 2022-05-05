@@ -60,6 +60,22 @@ def sieve_of_eratosthenes(n: int) -> list:
 # Факториал
 def factorial(n):
     res = 1
+    if n == 1:
+        return 1
     for i in range(1, n + 1):
         res *= i
+    return res
+
+
+# Список множителей числа (кроме самого числа)
+def divisors(n):
+    res = [1]
+    if n <= 1:
+        return []
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0 and i ** 2 != n:
+            res.append(i)
+            res.append(int(n / i))
+        elif i ** 2 == n:
+            res.append(i)
     return res
