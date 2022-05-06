@@ -34,6 +34,11 @@ def is_palindrome(n: int) -> bool:
     return str(n) == str(n)[::-1]
 
 
+# Является ли строка палиндромом
+def is_palindrome_str(n: str) -> bool:
+    return n == n[::-1]
+
+
 # Перемножение всех элементов списка
 def multiply(lst: list) -> int:
     if not all(isinstance(elem, (int, float)) for elem in lst):
@@ -79,3 +84,11 @@ def divisors(n):
         elif i ** 2 == n:
             res.append(i)
     return res
+
+
+# Порядковый номер буквы верхнего регистра (A-Z)
+def get_num_char(x: str) -> int:
+    if len(x) == 1:
+        return ord(x) - 64
+    else:
+        raise ValueError("Передано больше одного символа")

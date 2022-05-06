@@ -34,13 +34,6 @@ def problem_31_old(n=16):
     import sys
     return len(res), sys.getsizeof(res)
 
-#
-# @timer
-# def problem_31(n=7):
-#     coins = [2, 5, 10, 20, 50, 100, 200]
-#     ways = 1
-#     return ways
-
 
 if __name__ == "__main__":
     print(problem_31_old())
