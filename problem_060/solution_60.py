@@ -1,5 +1,5 @@
 from my_tools.tools import timer, is_prime
-from itertools import combinations, permutations
+from itertools import combinations
 
 """
 Задача 60
@@ -15,32 +15,38 @@ from itertools import combinations, permutations
 
 
 # В лоб решить нереально, т.е. перебирать ВСЕ варианты ВСЕХ перестановок для КАЖДОЙ пары.
-# Можно создать словарь {n:{p1, p2, p3...}}, где n - простое число из списка простых чисел
-# А p1, p2, p3... - простые числа с которыми оно образует пару простых чисел np1 и p1n.
-# Словарь получается не длинный
+# Можно создать словарь {key:{p1, p2, p3...}}, где key - простое число из списка простых чисел
+# А p1, p2, p3... - простые числа с которыми оно образует пару простых чисел key_p1 и p1_key.
+# Затем идёт перебор комбинаций (p1, p2, p3 ... pn) группами по n-1 элементов.
+# И для каждого элемента применяется метод множества intersection, если для каждого элемента
+# длина последовательности == n-1, то сумма полученного подмножества + key возвращается как результат
+# Время исполнения ~ 90c. Явно есть способ лучше, но не дался.
 
 
 @timer
-def problem_60(n=4):
-    prime_list = {i for i in range(3, 1000) if is_prime(i)}
+def problem_60(n=5):
+    prime_list = [i for i in range(3, 8400) if is_prime(i)]
     combinations_list = combinations(prime_list, r=2)
     graf_dict = {}
     for i in combinations_list:
         if is_prime(int(str(i[0]) + str(i[1]))) and is_prime(int(str(i[1]) + str(i[0]))):
             graf_dict.setdefault(i[0], set()).add(i[1])
             graf_dict.setdefault(i[1], set()).add(i[0])
+    # print(graf_dict)
+    unfit_nums = set()
     for key in graf_dict.keys():
-        comb_lst = combinations(graf_dict[key], r=n)
+        comb_lst = combinations(graf_dict[key], r=n-1)
         for comb in comb_lst:
-            lst = list(comb[:])
-            stack = 0
-            for i in lst:
-                lst.remove(i)  # TODO удаляет и от листа ничего не остаётся...
-                lst.append(key)
-                if len(graf_dict[i].intersection(lst)) == n-1:
-                    stack += 1
-                if stack == n - 1:
-                    print(graf_dict[i].intersection(lst), i)
+            if unfit_nums.intersection(set(comb)) == set(()):
+                stack = 0
+                in_lst = list(comb)
+                in_lst.append(key)
+                for i in comb:
+                    if len(graf_dict[i].intersection(in_lst)) == n-1:
+                        stack += 1
+                    if stack == n-1:
+                        return sum(graf_dict[i].intersection(in_lst)) + i
+        unfit_nums.add(key)
 
     import sys
     return sys.getsizeof(graf_dict), graf_dict
