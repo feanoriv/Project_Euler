@@ -27,6 +27,7 @@ from itertools import permutations
 
 
 # Упорядоченный != последовательно 3-4-5-6-7-8-угольные. Порядок произвольный.
+# Этот код ужасен. Но ответ верный. Мы тут не в продакшн пушим.
 
 
 @timer
@@ -54,7 +55,7 @@ def problem_61():
         i6 = [n for n in perm_comb[5] if str(n)[:2] in [str(k)[2:] for k in perm_comb[4]]
               and str(n)[2:] in [str(k)[:2] for k in perm_comb[0]]]
 
-        # Блок кода ниже можно повторять до достижения результата
+        # Блок кода ниже можно повторять до достижения результата. Тут хватает 1 раза.
         i1 = [n for n in i1 if str(n)[:2] in [str(k)[2:] for k in i6] and str(n)[2:] in [str(k)[:2] for k in i2]]
         i2 = [n for n in i2 if str(n)[:2] in [str(k)[2:] for k in i1] and str(n)[2:] in [str(k)[:2] for k in i3]]
         i3 = [n for n in i3 if str(n)[:2] in [str(k)[2:] for k in i2] and str(n)[2:] in [str(k)[:2] for k in i4]]
