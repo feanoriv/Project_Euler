@@ -1,4 +1,5 @@
 from my_tools.tools import timer
+from itertools import permutations
 
 
 """
@@ -24,48 +25,46 @@ from my_tools.tools import timer
 восьмиугольник — представлены различными числами этого множества.
 """
 
-# В этой задаче (как и в прошлой) явно необходимо использовать графы и искать в них клики.
 
-# Разделить каждый список на 2 части с началом и концом числа.
-# Проверять с последнего списка каждое его число - есть ли в списке №5 число, которое заканчивается
-# так же, как начинается число из списка №6. При этом есть ли число в списке №1, которое начинается так же,
-# как заканчивается число из списка №6
+# Упорядоченный != последовательно 3-4-5-6-7-8-угольные. Порядок произвольный.
 
 
 @timer
 def problem_61():
-    triangle_nums = [int(n*(n+1)/2) for n in range(200) if len(str(int(n*(n+1)/2))) == 4]
-    square_nums = [int(n**2) for n in range(100) if len(str(int(n**2))) == 4]
-    pentagonal_nums = [int(n*(3*n+1)/2) for n in range(150) if len(str(int(n*(3*n+1)/2))) == 4]
-    hexagonal_nums = [int(n*(2*n+1)) for n in range(150) if len(str(int(n*(2*n+1)))) == 4]
-    heptagonal_nums = [int(n*(5*n+1)/2) for n in range(150) if len(str(int(n*(5*n+1)/2))) == 4]
-    octagonal_nums = [int(n*(3*n+1)) for n in range(150) if len(str(int(n*(3*n+1)))) == 4]
+    triangle_nums = [int(n * (n + 1) / 2) for n in range(200) if len(str(int(n * (n + 1) / 2))) == 4]
+    square_nums = [int(n ** 2) for n in range(200) if len(str(int(n ** 2))) == 4]
+    pentagonal_nums = [int(n * (3 * n - 1) / 2) for n in range(200) if len(str(int(n * (3 * n - 1) / 2))) == 4]
+    hexagonal_nums = [int(n * (2 * n - 1)) for n in range(200) if len(str(int(n * (2 * n - 1)))) == 4]
+    heptagonal_nums = [int(n * (5 * n - 3) / 2) for n in range(200) if len(str(int(n * (5 * n - 3) / 2))) == 4]
+    octagonal_nums = [int(n * (3 * n - 2)) for n in range(200) if len(str(int(n * (3 * n - 2)))) == 4]
 
-    triangle_nums = [n for n in triangle_nums if str(n)[:2] in
-                     [str(k)[2:] for k in octagonal_nums] and str(n)[2:] in
-                     [str(x)[:2] for x in square_nums]]
-    square_nums = [n for n in square_nums if str(n)[:2] in
-                   [str(k)[2:] for k in triangle_nums] and str(n)[2:] in
-                   [str(j)[:2] for j in pentagonal_nums]]
+    lst_lst = [triangle_nums, square_nums, pentagonal_nums, hexagonal_nums, heptagonal_nums, octagonal_nums]
+    perm_gen = permutations(lst_lst, r=6)
+    for perm_comb in perm_gen:
+        i1 = [n for n in perm_comb[0] if str(n)[:2] in [str(k)[2:] for k in perm_comb[-1]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[1]]]
+        i2 = [n for n in perm_comb[1] if str(n)[:2] in [str(k)[2:] for k in perm_comb[0]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[2]]]
+        i3 = [n for n in perm_comb[2] if str(n)[:2] in [str(k)[2:] for k in perm_comb[1]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[3]]]
+        i4 = [n for n in perm_comb[3] if str(n)[:2] in [str(k)[2:] for k in perm_comb[2]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[4]]]
+        i5 = [n for n in perm_comb[4] if str(n)[:2] in [str(k)[2:] for k in perm_comb[3]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[5]]]
+        i6 = [n for n in perm_comb[5] if str(n)[:2] in [str(k)[2:] for k in perm_comb[4]]
+              and str(n)[2:] in [str(k)[:2] for k in perm_comb[0]]]
 
-    pentagonal_nums = [n for n in pentagonal_nums if str(n)[:2] in
-                       [str(k)[2:] for k in square_nums] and str(n)[2:] in
-                       [str(j)[:2] for j in hexagonal_nums]]
+        # Блок кода ниже можно повторять до достижения результата
+        i1 = [n for n in i1 if str(n)[:2] in [str(k)[2:] for k in i6] and str(n)[2:] in [str(k)[:2] for k in i2]]
+        i2 = [n for n in i2 if str(n)[:2] in [str(k)[2:] for k in i1] and str(n)[2:] in [str(k)[:2] for k in i3]]
+        i3 = [n for n in i3 if str(n)[:2] in [str(k)[2:] for k in i2] and str(n)[2:] in [str(k)[:2] for k in i4]]
+        i4 = [n for n in i4 if str(n)[:2] in [str(k)[2:] for k in i3] and str(n)[2:] in [str(k)[:2] for k in i5]]
+        i5 = [n for n in i5 if str(n)[:2] in [str(k)[2:] for k in i4] and str(n)[2:] in [str(k)[:2] for k in i6]]
+        i6 = [n for n in i6 if str(n)[:2] in [str(k)[2:] for k in i5] and str(n)[2:] in [str(k)[:2] for k in i1]]
 
-    hexagonal_nums = [n for n in hexagonal_nums if str(n)[:2] in
-                      [str(k)[2:] for k in pentagonal_nums] and str(n)[2:] in
-                      [str(j)[:2] for j in heptagonal_nums]]
+        if (len(i1) == 1) and (len(i2) == 1) and (len(i3) == 1) and (len(i4) == 1) and (len(i5) == 1) and (len(i6) == 1):
+            return sum([i1[0], i2[0], i3[0], i4[0], i5[0], i6[0]])
 
-    heptagonal_nums = [n for n in heptagonal_nums if str(n)[:2] in
-                      [str(k)[2:] for k in hexagonal_nums] and str(n)[2:] in
-                      [str(j)[:2] for j in octagonal_nums]]
-
-    octagonal_nums = [n for n in octagonal_nums if str(n)[:2] in
-                      [str(k)[2:] for k in heptagonal_nums] and str(n)[2:] in
-                      [str(j)[:2] for j in triangle_nums]]
-
-    return (triangle_nums, square_nums, pentagonal_nums, hexagonal_nums, heptagonal_nums, octagonal_nums)
-    # Не работает!?
 
 if __name__ == "__main__":
     print(problem_61())
