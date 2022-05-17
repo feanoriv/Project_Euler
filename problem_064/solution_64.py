@@ -20,9 +20,28 @@ from my_tools.tools import timer
 """
 
 
+def sqrt_sequence(x: int) -> list:  # Возвращает циклическую последовательность
+    a, b, c = 1, x, int(x**0.5)
+    a1, b1, c1 = a, b, c
+    seq = []
+    while True:
+        a1 = (b1 - c1 ** 2) / a1
+        res = int((b1**0.5 + c1) / a1)
+        seq.append(res)
+        c1 = abs(c1 - a1 * res)
+        if a1 == a and c1 == c:
+            return seq
+
+
 @timer
-def problem_64():
-    pass
+def problem_64(n=10000):
+    res = 0
+    for i in range(2, n + 1):
+        if i**0.5 == int(i**0.5):  # Отсекаются квадраты целых чисел
+            continue
+        if len(sqrt_sequence(i)) % 2 != 0:
+            res += 1
+    return res
 
 
 if __name__ == "__main__":
